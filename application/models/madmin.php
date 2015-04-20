@@ -17,4 +17,10 @@ class madmin extends CI_Model{
             return false;
         }
     }
+    function get_profile(){
+    	 $logged_admin = $this->session->userdata('logged_admin');
+    	 $rs = $this->db->select('*', false)->where('id',$logged_admin['id'])->get('admins');
+    	 $data   = $rs->row_array();
+    	 return $data;
+    }
 }

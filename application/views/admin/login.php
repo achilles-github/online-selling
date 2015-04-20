@@ -13,6 +13,7 @@
 	
 	
 	<script type="text/javascript" src="<?php echo base_url();?>js/login.js"></script>
+	
 </head>
 <body>
 <div class="mid-panel">
@@ -34,7 +35,7 @@
 			<label for="user_password">Password</label>
 			<input type="password" id="password" name="password" value="">
 			<div class="error_block" id="password_error"></div>
-			<input type="submit" value="Sign In" id="signin"/>
+			<input type="submit" value="Sign In" id="signin">
 		    <?=form_close()?>
 		    <?php
                         $frmAttrs   = array("id"=>'forgotFrm',"class" => "forgotpassword");
@@ -43,7 +44,7 @@
 			<label for="user_id">Email</label>
 			<input type="text" id="forgot_email" name="forgot_email" value="">
 			<div class="error_block" id="forgot_email_error"></div>
-			<input type="button" value="Back" id="back"/> <input type="submit" value="Submit" id="submit"/>
+			<input type="button" value="Back" id="back"/> <input type="submit" value="Submit" id="forgot_pass"/>
 		    <?=form_close()?>
 	</div>
 	<ul class="forgotnav">
@@ -54,12 +55,20 @@
 	<h6>MindDNA All right reserved | &copy; <?php echo date('Y');?></h6>
 </footer>
 <script>
-$("#forgot").click(function(){
-	Login.openForgotPassword();
-});
-$("#back").click(function(){
-	Login.openLogin();
-});
+	$("#loginFrm").submit(function(event){
+		//event.preventDefault();		
+		Login.validateLogin(event);
+	});
+	$("#forgotFrm").submit(function(event){
+		Login.validateForgotPassword(event);
+		
+	});
+	$("#forgot").click(function(){
+		Login.openForgotPassword();
+	});
+	$("#back").click(function(){
+		Login.openLogin();
+	});
 </script>
 </body>
 </html>

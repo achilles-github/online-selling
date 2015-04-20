@@ -32,6 +32,7 @@ class Dashboard extends CI_Controller {
 		$this->_check_logged_in();
 		//print_r($this->menu_select);exit;
 		$data['menu_select'] = $this->menu_select;
+		$data['profile'] = $this->madmin->get_profile();
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$this->load->view('admin/dashboard',$data);
 	}
