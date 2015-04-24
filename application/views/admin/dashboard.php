@@ -40,6 +40,7 @@
 			<div class="error_block" id="password_error"></div>
 		</div>
 		<div>
+			<input type="hidden" name="user_id" value="<?php echo $profile['id'];?>">
 		    	<input type="submit" value="Edit" id="edit"/>
 		</div>
 		

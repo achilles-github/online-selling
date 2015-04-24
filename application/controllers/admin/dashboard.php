@@ -36,7 +36,24 @@ class Dashboard extends CI_Controller {
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$this->load->view('admin/dashboard',$data);
 	}
-	
+	/*update the profile information of admin*/
+	public function edit_profile()
+	{
+		if($this->input->post(null))
+		{
+			$data['firstname'] = $this->input->post("first_name");
+			$data['lastname'] = $this->input->post("last_name");
+			$data['email'] = $this->input->post("email");
+			$data['username'] = $this->input->post("username");
+			if($this->input->post("change_password"))
+			{
+				$data['password'] = $this->input->post("password");
+			}
+			$id = $this->input->post("user_id");
+			$return = $this->madmin->update_profile($data,$id);
+		}
+		redirect('admin/dashboard', 'refresh');
+	}
 	/*function to check whether logged in or not */
 	private function _check_logged_in(){
 		if(!$this->session->userdata('logged_admin')){
@@ -44,6 +61,7 @@ class Dashboard extends CI_Controller {
 		    redirect('admin/login', 'refresh');
 		}
 	}
+	
 }
 
 /* End of file login.php */

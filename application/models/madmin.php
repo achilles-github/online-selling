@@ -23,4 +23,14 @@ class madmin extends CI_Model{
     	 $data   = $rs->row_array();
     	 return $data;
     }
+    function update_profile($data,$id)
+    {
+    	if(count($data) > 0)
+    	{
+    		$this->db->where("id",$id);
+    		$this->db->update("admins",$data);
+    		return 1;
+    	}
+    	return 0;
+    }
 }
