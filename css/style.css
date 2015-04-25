@@ -14,7 +14,7 @@ body{margin:0; padding:0; font-family:"Arial"; font-size:13px; line-height:22px;
 .forgotnav li a:hover{color:#ff0000; text-decoration:underline;}
 .forgotpassword{ display:none }
 
-header{position:fixed; top:0; left:0; right:0; height:45px; background:#eee; padding:10px; border-top:5px solid #cdcdcd;}
+header{/*position:fixed;*/ top:0; left:0; right:0; height:45px; background:#eee; padding:10px; border-top:5px solid #cdcdcd;}
 header .upper-header{overflow:hidden;}
 header .upper-header a.logo{float:left; color:#ff0000; font-size:30px; text-decoration:none; font-weight:bold; line-height:45px;}
 header .upper-header ul.user-information{float:right; margin:0; padding:0; list-style-type:none; color:#cdcdcd; font-size:12px;}
@@ -23,7 +23,7 @@ header .upper-header ul.user-information li{line-height:22.5px;}
 
 
 
-nav{position:fixed; left:0; bottom:55px; top:85px; width:300px; padding:10px; border-right:1px solid #cdcdcd;}
+nav{/*position:fixed;*/ left:0; bottom:55px; top:85px; width:300px; padding:10px; border-right:1px solid #cdcdcd;float:left}
 nav ul{overflow:auto; list-style-type:none; margin:0; padding:0;}
 nav ul > li{padding-bottom:5px; border-bottom:1px solid #eee; margin-bottom:5px;}
 nav ul > li > a{text-decoration:none; color:#ccc; font-weight:bold;}
@@ -33,7 +33,7 @@ nav ul li a:hover, nav ul li,active > a{color:#ff0000;}
 .error_block{ color:red}
 
 
-.main-content{position:fixed; top:85px; bottom:55px; left:326px; right:0; padding:10px;}
+.main-content{/*position:fixed;*/ float:left top:85px; bottom:55px; left:326px; right:0; padding:15px;}
 .active{ color:#ff0000; }
 
 footer{position:fixed; display:block; height:50px; bottom:0; left:0; right:0;}
