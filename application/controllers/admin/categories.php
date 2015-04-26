@@ -184,12 +184,13 @@ class Categories extends CI_Controller {
 			  
 				$this->load->library('image_lib');
 				$configThumb = array();  
+				$configThumb['maintain_ratio'] = FALSE;
 				$configThumb['image_library']   = 'gd2';  
 				$configThumb['source_image']    = $uploadedDetails['full_path'];
-					
+				$configThumb['quality'] = "100%";	
 				$configThumb['new_image'] = "./upload/categories/thumb/".$uploadedDetails['file_name'];
-				$configThumb['width']           = 286;  
-				$configThumb['height']          = 147;  
+				$configThumb['width']           = 150;  
+				$configThumb['height']          = 150;  
 				$this->image_lib->initialize($configThumb);
 				$this->image_lib->resize();
 				return array('error' => "", 'status' => $uploadedDetails['file_name']);
