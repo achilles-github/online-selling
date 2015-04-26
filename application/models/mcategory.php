@@ -7,11 +7,16 @@ class mcategory extends CI_Model{
     	$categories = $this->db->select('id,cat_name,datetime')->where('isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('categories');
     	return $categories->result_array();
     }
-    function insert_categories($data)
+    function category_by_id($id)
+    {
+    	$categories = $this->db->select('id,cat_name,datetime,img')->where('id',$id)->get('categories');
+    	return $categories->row_array();
+    }
+    function insert($data)
     {
     	$this->db->insert("categories",$data);
     }
-    function update_categories($data,$id)
+    function update($data,$id)
     {
     	$this->db->where("id",$id) ;
     	$this->db->update("categories",$data);
@@ -32,6 +37,12 @@ class mcategory extends CI_Model{
     		$categories = $this->db->select("COUNT(*) AS count",false)->like("cat_name",$search,"after")->where('isdeleted','0')->get('categories');
     	}    	
     	$data = $categories->row_array();
+    	return $data['count'];
+    }
+    function count_products($cat)
+    {
+    	$count = $this->db->select("COUNT(*) AS count",false)->where('category_id',$cat)->where('isdeleted','0')->get('products');
+    	$data = $count->row_array();
     	return $data['count'];
     }
 }

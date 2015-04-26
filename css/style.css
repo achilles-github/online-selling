@@ -38,3 +38,4 @@ nav ul li a:hover, nav ul li,active > a{color:#ff0000;}
 
 footer{position:fixed; display:block; height:50px; bottom:0; left:0; right:0;}
 footer h6{text-align:center; font-size:12px; font-weight:normal; margin:17px 0 0 0; line-height:16px; padding:0;}
+.msg{	color:green;}

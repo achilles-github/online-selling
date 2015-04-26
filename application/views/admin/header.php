@@ -9,6 +9,9 @@
 	<script src="<?php echo base_url();?>plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 	<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 	<script src="<?php echo base_url();?>plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+	<script>
+		BASE = "<?php echo base_url();?>";
+	</script>
 </head>
 <body>
 <header>
