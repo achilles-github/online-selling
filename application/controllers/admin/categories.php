@@ -39,6 +39,12 @@ class Categories extends CI_Controller {
 		
 		$this->load->view('admin/categories',$data);
 	}
+	
+	public function pages()
+	{
+		$data = array();
+		echo json_encode($data);
+	}
 	/*function to check whether logged in or not */
 	private function _check_logged_in(){
 		if(!$this->session->userdata('logged_admin')){
