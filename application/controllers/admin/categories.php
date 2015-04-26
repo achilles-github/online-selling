@@ -3,8 +3,8 @@
 class Categories extends CI_Controller {
 
 	var $menu_select = array(
-		'dashboard' => true,
-		'categories' => false,
+		'dashboard' => false,
+		'categories' => true,
 		'products' => false,
 		'featured' => false,
 		'customers' => false,
@@ -17,7 +17,7 @@ class Categories extends CI_Controller {
 	public function __construct()
 	{
 		parent:: __construct();		
-		$this->load->model('mcategory','',TRUE); 		
+		$this->load->model('mcategory','CATEGORY',TRUE); 		
 	}
 	
 	/**
@@ -32,17 +32,39 @@ class Categories extends CI_Controller {
 		$this->_check_logged_in();
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$data['menu_select'] = $this->menu_select;
-		
-		$limit = 10;
-		$skip = 0;		
-		$data['categories'] = $this->mcategory->get_categories($skip,$limit);
-		
 		$this->load->view('admin/categories',$data);
 	}
 	
 	public function pages()
 	{
 		$data = array();
+		$limit = $this->input->get('iDisplayLength');
+		$skip = $this->input->get('iDisplayStart');
+		$search = $this->input->get('sSearch');
+		$sort = $this->input->get('sSortDir_0');
+		$column = array("serial_no","cat_name","datetime","id");
+		$colNo = $this->input->get('iSortCol_0');
+		$sortCol = $column[$colNo];
+		if($search != "")
+		{	
+			$count = $this->CATEGORY->count_categories($search);			
+			$data['aaData'] = $this->CATEGORY->search_categories($search,$skip,$limit,$sort,$sortCol);
+		}
+		else
+		{
+			$count = $this->CATEGORY->count_categories();			
+			$data['aaData'] = $this->CATEGORY->get_categories($skip,$limit,$sort,$sortCol);
+		}		
+		$data['iTotalRecords'] = $count;
+		$data['iTotalDisplayRecords'] = $count;
+		$data['sEcho']	= $this->input->post("sEcho");
+		$i = 1;
+		foreach($data['aaData'] as $key => $val)
+		{
+			$data['aaData'][$key]['serial_no'] = $i;
+			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['datetime']));
+			$i++;
+		}
 		echo json_encode($data);
 	}
 	/*function to check whether logged in or not */
