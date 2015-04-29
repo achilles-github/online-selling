@@ -30,7 +30,7 @@
 </section>
 <script>
 $("#editFrm").submit(function(event){
-	Product.editCategoryValidate(event)	;
+	Product.editProductValidate(event)	;
 });
 </script>
 <?php $this->load->view('admin/footer'); ?> 

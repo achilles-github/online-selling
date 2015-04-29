@@ -28,7 +28,7 @@
 </section>
 <script>
 $("#addFrm").submit(function(event){
-	Product.addCategoryValidate(event)	;
+	Product.addProductValidate(event)	;
 });
 </script>
 <?php $this->load->view('admin/footer'); ?> 

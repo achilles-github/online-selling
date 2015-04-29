@@ -1,6 +1,6 @@
-var Product = function(){
+var Category = function(){
 	
-	var addProductValidate = function(event){
+	var addCategoryValidate = function(event){
 		var username = $("#name").val();
 		var password = $("#img").val();
 		$("#name_error").html("");
@@ -19,7 +19,7 @@ var Product = function(){
 		}		
 		
 	}
-	var editProductValidate = function(event){
+	var editCategoryValidate = function(event){
 		var username = $("#name").val();
 		var password = $("#img").val();
 		$("#name_error").html("");
@@ -39,8 +39,8 @@ var Product = function(){
 		
 	}
 	return {
-		addProductValidate : addProductValidate,
-		editProductValidate : editProductValidate
+		addCategoryValidate : addCategoryValidate,
+		editCategoryValidate : editCategoryValidate
 
 	};
 }();
