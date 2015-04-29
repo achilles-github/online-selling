@@ -1,11 +1,12 @@
 <?php $this->load->view('admin/header'); ?>
+<script src="<?php echo base_url();?js/category.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
 	<h1>Categories</h1>
 	    <?php
-		$frmAttrs   = array("id"=>'addFrm','class' => 'edit_categories');
+		$frmAttrs   = array("id"=>'editFrm','class' => 'edit_categories');
 		echo  form_open_multipart('admin/categories/edit/'.$id,$frmAttrs); 
 	    ?>
 	    	<div>

@@ -44,5 +44,3 @@ var Category = function(){
 
 	};
 }();
-
-
