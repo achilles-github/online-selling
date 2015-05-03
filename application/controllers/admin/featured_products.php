@@ -83,7 +83,7 @@ class Featured_products extends CI_Controller {
 		$data = array();
 		$id = $this->input->post("id");
 		$product_count = $this->PRODUCT->count_orders($id);
-		$update = array('isfeatured' => '1','feature_date' => NULL);
+		$update = array('isfeatured' => '0','feature_date' => NULL);
 		$this->PRODUCT->update($update,$id);
 		$data['status'] = "1";
 		echo json_encode($data);
@@ -96,6 +96,7 @@ class Featured_products extends CI_Controller {
 		$data['menu_select'] = $this->menu_select;		
 		if($this->input->post(null))
 		{
+			$id = $this->input->post("id");
 			$update['isfeatured'] = "1";
 			$update['feature_date'] = date('Y-m-d H:i:s');			
 			$this->PRODUCT->update($update,$id);
@@ -104,7 +105,22 @@ class Featured_products extends CI_Controller {
 		}		
 		$this->load->view('admin/featured_products/add',$data);
 	}
-	
+	public function search_products()
+	{
+		$search = $this->input->get("term");
+		$sortCol = "products.name";
+		$sort = "asc";
+		$skip = 0;
+		$limit = 10;
+		$data = array();
+		$products = $this->PRODUCT->search_products($search,$skip,$limit,$sort,$sortCol);
+		foreach($products as $key => $val)
+		{
+			$data[] = array( "id" => $val['id'], "label" => $val['name'], "value" => $val['name']);
+		}
+		echo json_encode($data);
+		exit;
+	}
 }
 /* End of file login.php */
 /* Location: ./application/controllers/admin/featured_products.php */

@@ -13,8 +13,7 @@ var FeaturedProduct = function(){
 	}
 	
 	return {
-		addFeaturedProductValidate : addFeaturedProductValidate,
-		editProductValidate : editProductValidate
+		addFeaturedProductValidate : addFeaturedProductValidate
 
 	};
 }();
