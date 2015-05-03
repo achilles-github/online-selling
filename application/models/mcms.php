@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class mproduct extends CI_Model{
+class mcms extends CI_Model{
     
     
     function get_cms($id)

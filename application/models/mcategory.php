@@ -7,6 +7,11 @@ class mcategory extends CI_Model{
     	$categories = $this->db->select('id,cat_name,datetime')->where('isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('categories');
     	return $categories->result_array();
     }
+    function all_categories()
+    {
+    	$categories = $this->db->select('id,cat_name')->where('isdeleted','0')->order_by("id")->get('categories');
+    	return $categories->result_array();
+    }
     function category_by_id($id)
     {
     	$categories = $this->db->select('id,cat_name,datetime,img')->where('id',$id)->get('categories');

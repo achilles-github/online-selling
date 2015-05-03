@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?js/category.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/category.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -27,6 +27,8 @@
 	    <?=form_close()?>	   
 </section>
 <script>
-
+$("#addFrm").submit(function(event){
+	Category.addCategoryValidate(event)	;
+});
 </script>
 <?php $this->load->view('admin/footer'); ?> 

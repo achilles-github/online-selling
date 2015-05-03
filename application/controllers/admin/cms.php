@@ -32,17 +32,17 @@ class Cms extends CI_Controller {
 		$this->_check_logged_in();
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$data['menu_select'] = $this->menu_select;
-		$data['id'] = "1";
+		$id = "1";
 		if($this->input->post(null))
 		{
-			$update['aboutus'] = $this->input->post("aboutus");
-			$update['policy'] = $this->input->post("policy");
+			$update['about_us'] = $this->input->post("aboutus");
+			$update['policies'] = $this->input->post("policy");
 			$this->CMS->update($update,$id);
-			$this->session->set_flashdata('msg',"CMS successfully Updated ".$msg);
+			$this->session->set_flashdata('msg',"CMS successfully Updated ");
 			//print_r($_FILES['image']);exit;
 			redirect('admin/cms', 'refresh');
 		}
-		$data['cms'] = $this->CMS->get_cms($data['id']);
+		$data['cms'] = $this->CMS->get_cms($id);
 		$this->load->view('admin/cms',$data);
 	}
 	

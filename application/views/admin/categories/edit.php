@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?js/category.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/category.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -18,7 +18,9 @@
 		<div>
 		    	<label for="user_id">Image</label>
 			<input type="file" id="image" name="image" value="">
-			<img src="<?php echo base_url();?>upload/categories/thumb/<?php echo $categories['img'];?>">
+			<?php if($categories['img'] != NULL && $categories['img'] != ""){ ?>
+				<img src="<?php echo base_url();?>upload/categories/thumb/<?php echo $categories['img'];?>">\
+			<?php } ?>
 		</div>
 	    	<div>
 	    		<input type="hidden" id="id" name="id" value="<?php echo $categories['id'];?>">
@@ -29,6 +31,8 @@
 	    <?=form_close()?>	   
 </section>
 <script>
-
+$("#editFrm").submit(function(event){
+	Category.editCategoryValidate(event)	;
+});
 </script>
 <?php $this->load->view('admin/footer'); ?> 

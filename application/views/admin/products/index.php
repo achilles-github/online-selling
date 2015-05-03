@@ -22,6 +22,9 @@
 			 SL No.
 		</th>
 		<th>
+			 Category Name
+		</th>
+		<th>
 			 Product Name
 		</th>
 		<th>
@@ -49,17 +52,20 @@ $(document).ready(function(){
 	    "mData": "cat_name",
 	    "sTitle": "Category Name"
 	  },{
-	    "mData": "datetime",
+	    "mData": "name",
+	    "sTitle": "Product Name"
+	  },{
+	    "mData": "created",
 	    "sTitle": "Created On"
 	  },{
 	    "mData":"status",
 	    "mRender": function(status){
 	    	
-	      return "<a href='"+BASE+"admin/products/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteProduct("+id+",this)' alt='delete'>Delete</a> | <a href='javascript:;' onclick='changeStatus("+status.id+",this,"+status.status+")' alt='active'>Active</a>";
+	      return "<a href='"+BASE+"admin/products/edit/"+status.id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteProduct("+status.id+",this)' alt='delete'>Delete</a> | <a href='javascript:;' onclick='changeStatus("+status.id+",this,"+status.status+")' alt='active'>Active</a>";
 	    }
 	  }],
-	  "order": [[2, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
+	  "order": [[3, "desc"]],
+	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,4 ] }]
     });
 });
 function deleteProduct(id,ele)

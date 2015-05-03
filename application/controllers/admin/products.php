@@ -17,7 +17,9 @@ class Products extends CI_Controller {
 	public function __construct()
 	{
 		parent:: __construct();		
-		$this->load->model('mproduct','PRODUCT',TRUE); 		
+		$this->load->model('mproduct','PRODUCT',TRUE);
+		$this->load->model('mcategory','CATEGORY',TRUE);
+		$this->load->library('Common'); 		
 	}
 	
 	/**
@@ -42,7 +44,7 @@ class Products extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","cat_name","datetime","id");
+		$column = array("serial_no","categories.cat_name","products.name","products.created","products.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
@@ -62,8 +64,8 @@ class Products extends CI_Controller {
 		foreach($data['aaData'] as $key => $val)
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
-			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['datetime']));
-			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['status']);
+			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
+			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['isenabled']);
 			$i++;
 		}
 		echo json_encode($data);
@@ -100,15 +102,15 @@ class Products extends CI_Controller {
 		$data = array();
 		$id = $this->input->post("id");
 		$product = $this->PRODUCT->product_by_id($id);
-		if($product['status'] == "1")
+		if($product['isenabled'] == "1")
 		{
-			$update['status'] = "0";
+			$update['isenabled'] = "0";
 			$data['status'] = "0";
 			$this->PRODUCT->update($update,$id);
 		}
 		else
 		{
-			$update['status'] = "1";
+			$update['isenabled'] = "1";
 			$data['status'] = "1";
 			$this->PRODUCT->update($update,$id);
 		}
@@ -123,11 +125,15 @@ class Products extends CI_Controller {
 		$data['id'] = $id;
 		if($this->input->post(null))
 		{
-			$update['cat_name'] = $this->input->post("name");
+			$update['name'] = $this->input->post("name");
+			$update['category_id'] = $this->input->post("category_id");
+			$update['description'] = $this->input->post("description");
+			$update['price'] = $this->input->post("price");
+			$update['quantity'] = $this->input->post("quantity");
 			//$update['datetime'] = date('Y-m-d H:i:s');
 			//$update['isdeleted'] = "0";
 			$img = $this->input->post('old_image');
-			$image = $this->upload_image($_FILES['image']['name']);			
+			$image = Common::upload_image($_FILES['image']['name']);			
 			$msg = "";
 			if($image['status'] == false)
 			{
@@ -136,9 +142,9 @@ class Products extends CI_Controller {
 			}
 			else
 			{
-				$this->remove_file(FCPATH."upload/products/",$img);
-				$this->remove_file(FCPATH."upload/products/thumb/",$img);
-				$update['img'] = $image['status'];
+				Common::remove_file(FCPATH."upload/products/",$img);
+				Common::remove_file(FCPATH."upload/products/thumb/",$img);
+				$update['image'] = $image['status'];
 			}
 			
 			$this->PRODUCT->update($update,$id);
@@ -146,6 +152,7 @@ class Products extends CI_Controller {
 			//print_r($_FILES['image']);exit;
 			redirect('admin/products', 'refresh');
 		}
+		$data['categories'] = $this->CATEGORY->all_categories();
 		$data['products'] = $this->PRODUCT->product_by_id($id);
 		$this->load->view('admin/products/edit',$data);
 	}
@@ -156,20 +163,25 @@ class Products extends CI_Controller {
 		
 		if($this->input->post(null))
 		{
-			$insert['cat_name'] = $this->input->post("name");
-			$insert['datetime'] = date('Y-m-d H:i:s');
+			$insert['name'] = $this->input->post("name");
+			$insert['created'] = date('Y-m-d H:i:s');
 			$insert['isdeleted'] = "0";
-			$image = $this->upload_image($_FILES['image']['name']);
+			$insert['isenabled'] = "1";
+			$insert['category_id'] = $this->input->post("category_id");
+			$insert['description'] = $this->input->post("description");
+			$insert['price'] = $this->input->post("price");
+			$insert['quantity'] = $this->input->post("quantity");
+			$image = Common::upload_image($_FILES['image']['name']);
 			
 			$msg = "";
 			if($image['status'] == false)
 			{
-				$insert['img'] = NULL;
+				$insert['image'] = NULL;
 				$msg = $image['error'];
 			}
 			else
 			{
-				$insert['img'] = $image['status'];
+				$insert['image'] = $image['status'];
 			}
 			
 			$this->PRODUCT->insert($insert);
@@ -177,62 +189,10 @@ class Products extends CI_Controller {
 			//print_r($_FILES['image']);exit;
 			redirect('admin/products', 'refresh');
 		}
+		$data['categories'] = $this->CATEGORY->all_categories();
 		$this->load->view('admin/products/add',$data);
 	}
-	private function upload_image($filename = NULL)
-	{
-		if($filename)
-		{
-			$image_name = str_replace(" ","",$filename);
-			$image_name = time().$image_name;
-			$this->load->library('upload');
-			$config['upload_path'] = './upload/products/';
-			$config['file_name'] = $image_name;
-			$config['allowed_types'] = 'gif|jpg|jpeg|png|PNG|JPEG|JPG|GIF';
-			$config['max_width'] = '5000';
-			$config['max_height'] = '5000';
-			//echo (1920*1280)/1024/1024;
-			$this->upload->initialize($config);
-			if (!$this->upload->do_upload("image")){
-				$error = $this->upload->display_errors(); 
-				
-				return array('error' => "<span class='error_block'>".$error."</span>", 'status' => false);
-				//echo $error;
-			} 
-			else 
-			{
-				$uploadedDetails    = $this->upload->data();
-				$image['image'] = $uploadedDetails['file_name'];
-			  
-				$this->load->library('image_lib');
-				$configThumb = array();  
-				$configThumb['maintain_ratio'] = FALSE;
-				$configThumb['image_library']   = 'gd2';  
-				$configThumb['source_image']    = $uploadedDetails['full_path'];
-				$configThumb['quality'] = "100%";	
-				$configThumb['new_image'] = "./upload/products/thumb/".$uploadedDetails['file_name'];
-				$configThumb['width']           = 150;  
-				$configThumb['height']          = 150;  
-				$this->image_lib->initialize($configThumb);
-				$this->image_lib->resize();
-				return array('error' => "", 'status' => $uploadedDetails['file_name']);
-			}
-		}
-		else
-		{
-			return array('error' => "", 'status' => false);
-		}
-       }
-       private function remove_file($folder,$image_name) 
-       { 
-		$folder_url = $folder;
-		//$rel_url = $folder;
-		if(file_exists($folder_url.$image_name)) 
-		{
-			
-			@unlink($folder_url.$image_name);
-		}
-	}
+	
 }
 /* End of file login.php */
 /* Location: ./application/controllers/admin/dashboard.php */
