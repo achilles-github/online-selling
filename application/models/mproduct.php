@@ -45,4 +45,27 @@ class mproduct extends CI_Model{
     	$data = $count->row_array();
     	return $data['count'];
     }
+    function get_featured_products($skip,$limit,$sort="asc",$sortCol = "products.feature_date")
+    {
+    	$products = $this->db->select('products.id,products.name,products.feature_date,products.isenabled,categories.cat_name')->join("categories","categories.id = products.category_id")->where('products.isdeleted','0')->where('products.isfeatured','1')->order_by($sortCol,$sort)->limit($limit,$skip)->get('products');
+    	return $products->result_array();
+    }
+    function search_featured_products($search,$skip,$limit,$sort="asc",$sortCol = "products.feature_date")
+    {
+    	$products = $this->db->select('products.id,products.name,products.feature_date,products.isenabled,categories.cat_name')->join("categories","categories.id = products.category_id")->where('products.isdeleted','0')->where('products.isfeatured','1')->like("products.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('products');
+    	return $products->result_array();
+    }
+    function count_featured_products($search = "")
+    {
+    	if($search == "")
+    	{
+    		$products = $this->db->select("COUNT(*) AS count",false)->where('isdeleted','0')->where('products.isfeatured','1')->get('products');
+    	}
+    	else
+    	{
+    		$products = $this->db->select("COUNT(*) AS count",false)->like("name",$search,"after")->where('isdeleted','0')->where('products.isfeatured','1')->get('products');
+    	}    	
+    	$data = $products->row_array();
+    	return $data['count'];
+    }
 }
