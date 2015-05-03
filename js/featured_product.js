@@ -1,4 +1,4 @@
-var Product = function(){
+var FeaturedProduct = function(){
 	
 	var addFeaturedProductValidate = function(event){
 		var name = $("#name").val();
