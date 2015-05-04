@@ -4,5 +4,5 @@
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
-application/config/database.php
-application/config/config.php
+*/config/database.php
+*/config/config.php
