@@ -123,7 +123,7 @@ class Customers extends CI_Controller {
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$data['menu_select'] = $this->menu_select;
 		$data['id'] = $id;		
-		$data['products'] = $this->CUSTOMER->customer_by_id($id);
+		$data['customers'] = $this->CUSTOMER->customer_by_id($id);
 		$this->load->view('admin/customers/view',$data);
 	}
 	
