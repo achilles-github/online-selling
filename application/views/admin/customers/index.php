@@ -27,7 +27,7 @@
 		<th>
 			 Name
 		</th>
-		<th>
+		<th width="25%">
 			 Address
 		</th>
 		<th>
@@ -58,8 +58,8 @@ $(document).ready(function(){
 	    "mData": "name",
 	    "sTitle": "Name"
 	  },{
-	    "mData": "Address",
-	    "sTitle": "address"
+	    "mData": "address",
+	    "sTitle": "Address"
 	  },{
 	    "mData": "created",
 	    "sTitle": "Created On"

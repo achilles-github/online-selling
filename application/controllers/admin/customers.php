@@ -64,6 +64,7 @@ class Customers extends CI_Controller {
 		foreach($data['aaData'] as $key => $val)
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
+			$data['aaData'][$key]["address"] = $val["address"].", ".$val["city"]." - ".$val['zip'].", ".$val['state'].", ".$val['country'];
 			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
 			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['status']);
 			$i++;
@@ -82,7 +83,7 @@ class Customers extends CI_Controller {
 	{
 		$data = array();
 		$id = $this->input->post("id");
-		$product_count = $this->CUSTOMERS->count_orders($id);
+		$product_count = $this->CUSTOMER->count_orders($id);
 		if($product_count > 0)
 		{
 			$data['status'] = "0";
@@ -102,7 +103,7 @@ class Customers extends CI_Controller {
 		$data = array();
 		$id = $this->input->post("id");
 		$product = $this->CUSTOMER->customer_by_id($id);
-		if($product['isenabled'] == "1")
+		if($product['status'] == "1")
 		{
 			$update['status'] = "0";
 			$data['status'] = "0";

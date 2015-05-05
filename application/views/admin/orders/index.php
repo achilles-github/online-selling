@@ -43,7 +43,7 @@
 $(document).ready(function(){    
 	$('#customers').DataTable({
 	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/customers/pages",
+	  "sAjaxSource": BASE + "admin/orders/pages",
 	  "aoColumns": [{
 	    "mData":"serial_no",
 	    "sTitle": "SL No.",
@@ -58,17 +58,16 @@ $(document).ready(function(){
 	    "mData": "created",
 	    "sTitle": "Created On"
 	  },{
-	    "mData":"status",
-	    "mRender": function(status){
-	    	
-	      return "<a href='"+BASE+"admin/orders/view/"+status.id+"' alt='view'>View</a> | <a href='javascript:;' onclick='deleteOrder("+status.id+",this)' alt='delete'>Delete</a> | <a href='javascript:;' onclick='changeStatus("+status.id+",this,"+status.status+")' alt='active'>Active</a>";
+	    "mData":"delivered",
+	    "mRender": function(delivered){	    	
+	      return "<a href='"+BASE+"admin/orders/view/"+delivered.id+"' alt='view'>View</a> | <a href='javascript:;' onclick='deleteOrder("+delivered.id+",this)' alt='delete'>Delete</a> | <a href='javascript:;' onclick='changeDeliveryStatus("+delivered.id+",this,"+delivered.status+")' alt='active'>Undelivered</a>";
 	    }
 	  }],
 	  "order": [[3, "desc"]],
 	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,4 ] }]
     });
 });
-function deleteCustomer(id,ele)
+function deleteOrder(id,ele)
 {
 	$.ajax({
                 type:'POST',
@@ -90,11 +89,11 @@ function deleteCustomer(id,ele)
                 }
      });
 }
-function changeStatus(id,ele)
+function changeDeliveryStatus(id,ele)
 {
 	$.ajax({
                 type:'POST',
-                url:BASE+'admin/orders/change_status',
+                url:BASE+'admin/orders/change_delivery_status',
 		data:{id:id},
                 dataType:'json',
                 success:function(data){
@@ -102,11 +101,11 @@ function changeStatus(id,ele)
                    
                     if(data['status'] == "1")
                     {
-                        $(ele).html("Active");
+                        $(ele).html("Delivered");
                     }
                     else
                     {
-                        $(ele).html("InActive");
+                        $(ele).html("UnDelivered");
                     }
                 }
      });

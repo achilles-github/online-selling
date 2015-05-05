@@ -4,14 +4,13 @@ class morder extends CI_Model{
     
     function get_orders($skip,$limit,$sort="asc",$sortCol = "orders.created")
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.isenabled,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
-    	$data = $orders->result_array();
-    	
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.status,orders.isdelivered,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
+    	$data = $orders->result_array();   	
     	return $data;
     }
     function order_by_id($id)
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.isenabled,customers.name,shipping.address,states.name as state,cities.name as city, countries.country_name as country, shipping.zip')->join("customers","customers.id = orders.customer_id")->join("shippings","shippings.order_id=orders.id")->where('orders.id',$id)->get('orders');
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created, orders.status,orders.isdelivered,customers.name, shipping.address,states.name as state,cities.name as city, countries.country_name as country, shipping.zip')->join("customers","customers.id = orders.customer_id")->join("shippings","shippings.order_id=orders.id")->where('orders.id',$id)->get('orders');
     	$row = $orders->row_array();
     	if(count($row) > 0)
     	{
@@ -31,7 +30,7 @@ class morder extends CI_Model{
     }
     function search_orders($search,$skip,$limit,$sort="asc",$sortCol = "orders.created")
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.isenabled,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->like("customers.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.status,orders.isdelivered,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->like("customers.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
     	$data = $orders->result_array();
     	return $data;
     }

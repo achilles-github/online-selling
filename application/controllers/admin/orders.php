@@ -65,7 +65,7 @@ class Orders extends CI_Controller {
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
 			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
-			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['isenabled']);
+			$data['aaData'][$key]['delivered'] = array("id" => $val['id'],"status" => $val['isdelivered']);
 			$i++;
 		}
 		echo json_encode($data);
@@ -88,20 +88,20 @@ class Orders extends CI_Controller {
 		echo json_encode($data);
 		exit;
 	}
-	public function change_status()
+	public function change_delivery_status()
 	{
 		$data = array();
 		$id = $this->input->post("id");
-		$product = $this->ORDER->order_by_id($id);
-		if($product['isenabled'] == "1")
+		$order = $this->ORDER->order_by_id($id);
+		if($order['isdelivered'] == "1")
 		{
-			$update['isenabled'] = "0";
+			$update['isdelivered'] = "0";
 			$data['status'] = "0";
 			$this->ORDER->update($update,$id);
 		}
 		else
 		{
-			$update['isenabled'] = "1";
+			$update['isdelivered'] = "1";
 			$data['status'] = "1";
 			$this->ORDER->update($update,$id);
 		}
