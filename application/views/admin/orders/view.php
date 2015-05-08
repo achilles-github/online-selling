@@ -23,7 +23,49 @@
 		    	<label for="user_id">Shipping Address</label>
 			<textarea id="address" name="address" readonly="readonly"><?php echo $orders['shipping'];?></textarea>		
 		</div>
-			    	
+		<div>
+		<table>
+			<thead>
+			<tr>
+				<th>
+					 SL No.
+				</th>		
+				<th>
+					 Product Name.
+				</th>
+				<th>
+					 Quantity
+				</th>
+				<th>
+					 Price
+				</th>
+				<th class="hidden-xs">
+					 Total
+				</th>		
+			</tr>
+			</thead>
+			<tbody>
+			<?php 
+				$total = 0;
+				foreach($orders['order_products'] as $key => $val){ 
+				$total += $val['total'];
+			?>
+				<tr>
+					<td><?php echo $val['product_name'];?></td>
+					<td><?php echo $val['quantity'];?></td>
+					<td><?php echo $val['price'];?></td>
+					<td><?php echo $val['total'];?></td>
+				</tr>
+			<?php } ?>				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3"></td>
+					<td><?php echo $total;?></td>
+				</tr>
+			</tfoot>
+		</table>
+		</div>	    	
 	    <?=form_close()?>	   
 </section>
 
