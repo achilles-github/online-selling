@@ -4,21 +4,21 @@
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
-	<h1>Product</h1>
+	<h1>States</h1>
 	    <?php
 		$frmAttrs   = array("id"=>'editFrm','class' => 'edit_countries');
-		echo  form_open_multipart('admin/countries/edit/'.$id,$frmAttrs); 
+		echo  form_open_multipart('admin/states/edit/'.$id,$frmAttrs); 
 	    ?>
 	    	
 	    	<div>
 		    	<label for="user_id">Name</label>
-			<input type="text" id="name" name="name" value="<?php echo $countries['name'];?>">
+			<input type="text" id="name" name="name" value="<?php echo $states['name'];?>">
 			<div class="error_block" id="name_error"></div>
 			
 		</div>
 		
 	    	<div>
-	    		<input type="hidden" id="id" name="id" value="<?php echo $countries['id'];?>">
+	    		<input type="hidden" id="id" name="id" value="<?php echo $states['id'];?>">
 		    	<input type="submit" value="Submit" id="submit">
 		</div>
 		

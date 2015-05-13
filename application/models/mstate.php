@@ -1,47 +1,47 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class mcountry extends CI_Model{
+class mstate extends CI_Model{
     
-    function get_countries($skip,$limit,$sort="asc",$sortCol = "country_name")
+    function get_states($skip,$limit,$sort="asc",$sortCol = "state_name")
     {
-    	$countries = $this->db->select('id,country_name')->where('isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('countries');
-    	return $countries->result_array();
+    	$states = $this->db->select('states.id,states.state_name,countries.country_name')->join('countries',"countries.id = states.country_id")->where('states.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('countries');
+    	return $states->result_array();
     }
-    function country_by_id($id)
+    function states_by_id($id)
     {
-    	$countries = $this->db->select('id,country_name')->where('id',$id)->get('countries');
-    	return $countries->row_array();
+    	$states = $this->db->select('id,country_name,country_id')->where('id',$id)->get('states');
+    	return $states->row_array();
     }
     function insert($data)
     {
-    	$this->db->insert("countries",$data);
+    	$this->db->insert("states",$data);
     }
     function update($data,$id)
     {
     	$this->db->where("id",$id) ;
     	$this->db->update("countries",$data);
     }
-    function search_countries($search,$skip,$limit,$sort="asc",$sortCol = "country_name")
+    function search_states($search,$skip,$limit,$sort="asc",$sortCol = "country_name")
     {
-    	$products = $this->db->select('id,country_name')->where('isdeleted','0')->like("country_name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('countries');
-    	return $products->result_array();
+    	$states = $this->db->select('states.id,states.state_name,countries.country_name')->join('countries',"countries.id = states.country_id")->where('states.isdeleted','0')->like("states.state_name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('states');
+    	return $states->result_array();
     }
     function count_countries($search = "")
     {
     	if($search == "")
     	{
-    		$countries = $this->db->select("COUNT(*) AS count",false)->where('isdeleted','0')->get('countries');
+    		$states = $this->db->select("COUNT(*) AS count",false)->where('isdeleted','0')->get('states');
     	}
     	else
     	{
-    		$countries = $this->db->select("COUNT(*) AS count",false)->like("country_name",$search,"after")->where('isdeleted','0')->get('countries');
+    		$states = $this->db->select("COUNT(*) AS count",false)->like("state_name",$search,"after")->where('isdeleted','0')->get('states');
     	}    	
-    	$data = $countries->row_array();
+    	$data = $states->row_array();
     	return $data['count'];
     }
-    function count_states($id)
+    function count_cities($id)
     {
-    	$count = $this->db->select("COUNT(*) AS count",false)->where('country_id',$id)->where('isdeleted','0')->get('states');
+    	$count = $this->db->select("COUNT(*) AS count",false)->where('state_id',$id)->where('isdeleted','0')->get('cities');
     	$data = $count->row_array();
     	return $data['count'];
     }

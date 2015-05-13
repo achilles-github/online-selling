@@ -6,12 +6,12 @@
 <section class="main-content">
 	<h1>Products</h1>
 	<?php
-		$frmAttrs   = array("id"=>'addFrm','class' => 'add_states');
+		$frmAttrs   = array("id"=>'addFrm','class' => 'add_products');
 		echo  form_open_multipart('admin/products/add',$frmAttrs); 
 	    ?>
 	    	<div>
-		    	<label>Country</label>
-			<select id="country_id" name="country_id">
+		    	<label>Category</label>
+			<select id="category_id" name="category_id">
 				<option value="">--Select--</option>
 				<?php foreach($categories as $key => $val)
 				      {
@@ -21,14 +21,42 @@
 				      }
 				?>
 			</select>
-			<div class="error_block" id="country_error"></div>
+			<div class="error_block" id="category_error"></div>
 		</div>
 	    	<div>
 		    	<label>Name</label>
 			<input type="text" id="name" name="name" value="">
 			<div class="error_block" id="name_error"></div>
 		</div>
-		
+		<div>
+		    	<label>Description</label>
+			<textarea id="description" name="description"></textarea>			
+		</div>
+		<div>
+		    	<label>Quantity</label>
+			<input type="text" id="quantity" name="quantity" value="">
+			<div class="error_block" id="quantity_error"></div>		
+		</div>
+		<div>
+		    	<label>Units</label>
+			<input type="text" id="units" name="units" value="">
+			<div class="error_block" id="units_error"></div>		
+		</div>
+		<div>
+		    	<label>Price</label>
+			<input type="text" id="price" name="price" value="">
+			<div class="error_block" id="price_error"></div>		
+		</div>
+		<div>
+		    	<label>Discount %</label>
+			<input type="text" id="discount" name="discount" value="0">
+			<div class="error_block" id="discount_error"></div>		
+		</div>
+		<div>
+		    	<label>Image</label>
+			<input type="file" id="image" name="image" value="">
+			<div class="error_block" id="image_error"></div>
+		</div>
 	    	<div>
 			
 		    	<input type="submit" value="Submit" id="submit"/>

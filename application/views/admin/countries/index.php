@@ -43,7 +43,7 @@ $(document).ready(function(){
 	    "sTitle": "SL No.",
 	    "bSortable": false,
 	  },{
-	    "mData": "name",
+	    "mData": "country_name",
 	    "sTitle": "Country Name"
 	  },{
 	    "mData":"id",

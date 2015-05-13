@@ -6,7 +6,7 @@
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
-	<h1>Countries</h1>
+	<h1>States</h1>
 	<div class="msg">
 	<?php 
 		if($this->session->flashdata('msg')){
@@ -35,32 +35,35 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#products').DataTable({
+	$('#states').DataTable({
 	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/countries/pages",
+	  "sAjaxSource": BASE + "admin/states/pages",
 	  "aoColumns": [{
 	    "mData":"serial_no",
 	    "sTitle": "SL No.",
 	    "bSortable": false,
 	  },{
-	    "mData": "name",
+	    "mData": "country_name",
 	    "sTitle": "Country Name"
+	  },{
+	    "mData": "state_name",
+	    "sTitle": "State Name"
 	  },{
 	    "mData":"id",
 	    "mRender": function(id){
 	    	
-	      return "<a href='"+BASE+"admin/countries/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCountry("+id+",this)' alt='delete'>Delete</a>";
+	      return "<a href='"+BASE+"admin/states/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteState("+id+",this)' alt='delete'>Delete</a>";
 	    }
 	  }],
-	  "order": [[1, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,2 ] }]
+	  "order": [[2, "desc"]],
+	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
     });
 });
-function deleteCountry(id,ele)
+function deleteState(id,ele)
 {
 	$.ajax({
                 type:'POST',
-                url:BASE+'admin/countries/delete',
+                url:BASE+'admin/states/delete',
 		data:{id:id},
                 dataType:'json',
                 success:function(data){
