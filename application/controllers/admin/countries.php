@@ -105,7 +105,7 @@ class Countries extends CI_Controller {
 		$data['id'] = $id;
 		if($this->input->post(null))
 		{
-			$update['name'] = $this->input->post("name");
+			$update['country_name'] = $this->input->post("name");
 			$this->COUNTRY->update($update,$id);
 			$this->session->set_flashdata('msg',"Country successfully Updated");
 			//print_r($_FILES['image']);exit;
@@ -121,7 +121,7 @@ class Countries extends CI_Controller {
 		
 		if($this->input->post(null))
 		{
-			$insert['name'] = $this->input->post("name");						
+			$insert['country_name'] = $this->input->post("name");						
 			$this->PRODUCT->insert($insert);
 			$this->session->set_flashdata('msg',"Country successfully Added");
 			//print_r($_FILES['image']);exit;
