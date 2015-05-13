@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?>js/country.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/state.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -28,7 +28,11 @@
 			<input type="text" id="name" name="name" value="">
 			<div class="error_block" id="name_error"></div>
 		</div>
-		
+		<div>
+		    	<label>Tax %</label>
+			<input type="text" id="tax" name="tax" value="0">
+			<div class="error_block" id="tax_error"></div>
+		</div>
 	    	<div>
 			
 		    	<input type="submit" value="Submit" id="submit"/>

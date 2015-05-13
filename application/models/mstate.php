@@ -26,7 +26,7 @@ class mstate extends CI_Model{
     	$states = $this->db->select('states.id,states.state_name,countries.country_name')->join('countries',"countries.id = states.country_id")->where('states.isdeleted','0')->like("states.state_name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('states');
     	return $states->result_array();
     }
-    function count_countries($search = "")
+    function count_states($search = "")
     {
     	if($search == "")
     	{
