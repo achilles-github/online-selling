@@ -11,7 +11,10 @@ class Contacts extends CI_Controller {
 		'orders' => false,
 		'payments' => false,
 		'cms' => false,
-		'contacts' => true
+		'contacts' => true,
+		'countries' => false,
+		'states' => false,
+		'cities' => false
 	);
 	
 	//constructor

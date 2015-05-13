@@ -10,7 +10,11 @@ class Orders extends CI_Controller {
 		'customers' => false,
 		'orders' => true,
 		'payments' => false,
-		'cms' => false
+		'cms' => false,
+		'contacts' => false,
+		'countries' => false,
+		'states' => false,
+		'cities' => false
 	);
 	
 	//constructor

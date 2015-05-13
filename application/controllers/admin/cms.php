@@ -10,7 +10,11 @@ class Cms extends CI_Controller {
 		'customers' => false,
 		'orders' => false,
 		'payments' => false,
-		'cms' => true
+		'cms' => true,
+		'contacts' => false,
+		'countries' => false,
+		'states' => false,
+		'cities' => false
 	);
 	
 	//constructor

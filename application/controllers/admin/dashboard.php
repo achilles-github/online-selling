@@ -10,7 +10,11 @@ class Dashboard extends CI_Controller {
 		'customers' => false,
 		'orders' => false,
 		'payments' => false,
-		'cms' => false
+		'cms' => false,
+		'contacts' => false,
+		'countries' => false,
+		'states' => false,
+		'cities' => false
 	);
 	
 	//constructor
