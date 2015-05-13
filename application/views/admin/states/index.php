@@ -14,8 +14,8 @@
 		    }
 	?>
 	</div>
-	<a href="<?php echo base_url();?>admin/products/add">Add New</a>
-	<table class="table table-striped table-bordered table-hover" id="products">
+	<a href="<?php echo base_url();?>admin/states/add">Add New</a>
+	<table class="table table-striped table-bordered table-hover" id="states">
 	<thead>
 	<tr>
 		<th>

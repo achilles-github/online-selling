@@ -14,8 +14,8 @@
 		    }
 	?>
 	</div>
-	<a href="<?php echo base_url();?>admin/products/add">Add New</a>
-	<table class="table table-striped table-bordered table-hover" id="products">
+	<a href="<?php echo base_url();?>admin/countries/add">Add New</a>
+	<table class="table table-striped table-bordered table-hover" id="countries">
 	<thead>
 	<tr>
 		<th>
@@ -35,7 +35,7 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#products').DataTable({
+	$('#countries').DataTable({
 	  "bServerSide": true,
 	  "sAjaxSource": BASE + "admin/countries/pages",
 	  "aoColumns": [{

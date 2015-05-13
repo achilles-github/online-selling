@@ -15,7 +15,7 @@
 	?>
 	</div>
 	
-	<table class="table table-striped table-bordered table-hover" id="customers">
+	<table class="table table-striped table-bordered table-hover" id="contacts">
 	<thead>
 	<tr>
 		<th>
@@ -44,7 +44,7 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#customers').DataTable({
+	$('#contacts').DataTable({
 	  "bServerSide": true,
 	  "sAjaxSource": BASE + "admin/contacts/pages",
 	  "aoColumns": [{
@@ -74,7 +74,7 @@ $(document).ready(function(){
 	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,5 ] }]
     });
 });
-function deleteCustomer(id,ele)
+function deleteContact(id,ele)
 {
 	$.ajax({
                 type:'POST',
