@@ -55,6 +55,12 @@ $(document).ready(function(){
 	    "mData": "name",
 	    "sTitle": "Product Name"
 	  },{
+	    "mData": "quantity",
+	    "sTitle": "Quantity"
+	  },{
+	    "mData": "price",
+	    "sTitle": "Price"
+	  },{
 	    "mData": "created",
 	    "sTitle": "Created On"
 	  },{
@@ -65,7 +71,7 @@ $(document).ready(function(){
 	    }
 	  }],
 	  "order": [[3, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,4 ] }]
+	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,6 ] }]
     });
 });
 function deleteProduct(id,ele)

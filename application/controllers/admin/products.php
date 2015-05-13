@@ -44,7 +44,7 @@ class Products extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","categories.cat_name","products.name","products.created","products.id");
+		$column = array("serial_no","categories.cat_name","products.name","products.quantity","products.price","products.created","products.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
@@ -65,6 +65,7 @@ class Products extends CI_Controller {
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
 			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
+			$data['aaData'][$key]['quantity'] = $val['quantity']." ".$val['units'];
 			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['isenabled']);
 			$i++;
 		}
@@ -130,6 +131,8 @@ class Products extends CI_Controller {
 			$update['description'] = $this->input->post("description");
 			$update['price'] = $this->input->post("price");
 			$update['quantity'] = $this->input->post("quantity");
+			$update['units'] = $this->input->post("units");
+			$update['discount'] = $this->input->post("discount");
 			//$update['datetime'] = date('Y-m-d H:i:s');
 			//$update['isdeleted'] = "0";
 			$img = $this->input->post('old_image');
@@ -171,6 +174,8 @@ class Products extends CI_Controller {
 			$insert['description'] = $this->input->post("description");
 			$insert['price'] = $this->input->post("price");
 			$insert['quantity'] = $this->input->post("quantity");
+			$update['units'] = $this->input->post("units");
+			$update['discount'] = $this->input->post("discount");
 			$image = Common::upload_image($_FILES['image']['name']);
 			
 			$msg = "";

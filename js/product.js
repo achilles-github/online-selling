@@ -28,9 +28,21 @@ var Product = function(){
 			event.preventDefault();
 			return false;
 		}
+		if(units == "")
+		{
+			$("#units_error").html("Please provide a units.");
+			event.preventDefault();
+			return false;
+		}
 		if(price == "" || isNaN(price) == true)
 		{
 			$("#price_error").html("Please provide a price.");
+			event.preventDefault();
+			return false;
+		}
+		if(discount == "" || isNaN(price) == true)
+		{
+			$("#discount_error").html("Please provide a discount.Its must 0 or greater.");
 			event.preventDefault();
 			return false;
 		}		
@@ -63,9 +75,21 @@ var Product = function(){
 			event.preventDefault();
 			return false;
 		}
+		if(units == "")
+		{
+			$("#units_error").html("Please provide a units.");
+			event.preventDefault();
+			return false;
+		}
 		if(price == "" || isNaN(price) == true)
 		{
 			$("#price_error").html("Please provide a price.");
+			event.preventDefault();
+			return false;
+		}
+		if(discount == "" || isNaN(price) == true)
+		{
+			$("#discount_error").html("Please provide a discount.Its must 0 or greater.");
 			event.preventDefault();
 			return false;
 		}	

@@ -38,9 +38,19 @@
 			<div class="error_block" id="quantity_error"></div>		
 		</div>
 		<div>
+		    	<label>Units</label>
+			<input type="text" id="units" name="units" value="">
+			<div class="error_block" id="units_error"></div>		
+		</div>
+		<div>
 		    	<label>Price</label>
 			<input type="text" id="price" name="price" value="">
 			<div class="error_block" id="price_error"></div>		
+		</div>
+		<div>
+		    	<label>Discount %</label>
+			<input type="text" id="discount" name="discount" value="0">
+			<div class="error_block" id="discount_error"></div>		
 		</div>
 		<div>
 		    	<label>Image</label>
