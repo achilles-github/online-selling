@@ -21,8 +21,7 @@ class Countries extends CI_Controller {
 	public function __construct()
 	{
 		parent:: __construct();		
-		$this->load->model('mproduct','PRODUCT',TRUE);
-		$this->load->model('mcategory','CATEGORY',TRUE);
+		$this->load->model('mcountry','COUNTRY',TRUE);
 		$this->load->library('Common'); 		
 	}
 	
@@ -38,7 +37,7 @@ class Countries extends CI_Controller {
 		$this->_check_logged_in();
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
 		$data['menu_select'] = $this->menu_select;
-		$this->load->view('admin/products/index',$data);
+		$this->load->view('admin/countries/index',$data);
 	}
 	
 	public function pages()
@@ -48,18 +47,18 @@ class Countries extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","categories.cat_name","products.name","products.quantity","products.price","products.created","products.id");
+		$column = array("serial_no","country_name","id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
 		{	
-			$count = $this->PRODUCT->count_products($search);			
-			$data['aaData'] = $this->PRODUCT->search_products($search,$skip,$limit,$sort,$sortCol);
+			$count = $this->COUNTRY->count_countries($search);			
+			$data['aaData'] = $this->COUNTRY->search_countries($search,$skip,$limit,$sort,$sortCol);
 		}
 		else
 		{
-			$count = $this->PRODUCT->count_products();			
-			$data['aaData'] = $this->PRODUCT->get_products($skip,$limit,$sort,$sortCol);
+			$count = $this->COUNTRY->count_countries();			
+			$data['aaData'] = $this->COUNTRY->get_countries($skip,$limit,$sort,$sortCol);
 		}		
 		$data['iTotalRecords'] = $count;
 		$data['iTotalDisplayRecords'] = $count;
@@ -68,9 +67,6 @@ class Countries extends CI_Controller {
 		foreach($data['aaData'] as $key => $val)
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
-			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
-			$data['aaData'][$key]['quantity'] = $val['quantity']." ".$val['units'];
-			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['isenabled']);
 			$i++;
 		}
 		echo json_encode($data);
@@ -87,41 +83,20 @@ class Countries extends CI_Controller {
 	{
 		$data = array();
 		$id = $this->input->post("id");
-		$product_count = $this->PRODUCT->count_orders($id);
-		if($product_count > 0)
+		$state_count = $this->COUNTRY->count_states($id);
+		if($state_count > 0)
 		{
 			$data['status'] = "0";
-			$data['message'] = "Order has already been placed on this product.To delete the product you must remove products from the orders first.";
+			$data['message'] = "Country cannot be deleted as it has states present under it.";
 		}
 		else
 		{
 			$update = array('isdeleted' => '1');
-			$this->PRODUCT->update($update,$id);
+			$this->COUNTRY->update($update,$id);
 			$data['status'] = "1";
 		}
 		echo json_encode($data);
 		exit;
-	}
-	public function change_status()
-	{
-		$data = array();
-		$id = $this->input->post("id");
-		$product = $this->PRODUCT->product_by_id($id);
-		if($product['isenabled'] == "1")
-		{
-			$update['isenabled'] = "0";
-			$data['status'] = "0";
-			$this->PRODUCT->update($update,$id);
-		}
-		else
-		{
-			$update['isenabled'] = "1";
-			$data['status'] = "1";
-			$this->PRODUCT->update($update,$id);
-		}
-		echo json_encode($data);
-		exit;
-		
 	}
 	public function edit($id)
 	{
@@ -131,37 +106,13 @@ class Countries extends CI_Controller {
 		if($this->input->post(null))
 		{
 			$update['name'] = $this->input->post("name");
-			$update['category_id'] = $this->input->post("category_id");
-			$update['description'] = $this->input->post("description");
-			$update['price'] = $this->input->post("price");
-			$update['quantity'] = $this->input->post("quantity");
-			$update['units'] = $this->input->post("units");
-			$update['discount'] = $this->input->post("discount");
-			//$update['datetime'] = date('Y-m-d H:i:s');
-			//$update['isdeleted'] = "0";
-			$img = $this->input->post('old_image');
-			$image = Common::upload_image($_FILES['image']['name']);			
-			$msg = "";
-			if($image['status'] == false)
-			{
-				//$update['img'] = NULL;
-				$msg = $image['error'];
-			}
-			else
-			{
-				Common::remove_file(FCPATH."upload/products/",$img);
-				Common::remove_file(FCPATH."upload/products/thumb/",$img);
-				$update['image'] = $image['status'];
-			}
-			
-			$this->PRODUCT->update($update,$id);
-			$this->session->set_flashdata('msg',"Product successfully Updated ".$msg);
+			$this->COUNTRY->update($update,$id);
+			$this->session->set_flashdata('msg',"Country successfully Updated");
 			//print_r($_FILES['image']);exit;
-			redirect('admin/products', 'refresh');
+			redirect('admin/countries', 'refresh');
 		}
-		$data['categories'] = $this->CATEGORY->all_categories();
-		$data['products'] = $this->PRODUCT->product_by_id($id);
-		$this->load->view('admin/products/edit',$data);
+		$data['countries'] = $this->COUNTRY->country_by_id($id);
+		$this->load->view('admin/countries/edit',$data);
 	}
 	public function add()
 	{
@@ -170,36 +121,13 @@ class Countries extends CI_Controller {
 		
 		if($this->input->post(null))
 		{
-			$insert['name'] = $this->input->post("name");
-			$insert['created'] = date('Y-m-d H:i:s');
-			$insert['isdeleted'] = "0";
-			$insert['isenabled'] = "1";
-			$insert['category_id'] = $this->input->post("category_id");
-			$insert['description'] = $this->input->post("description");
-			$insert['price'] = $this->input->post("price");
-			$insert['quantity'] = $this->input->post("quantity");
-			$update['units'] = $this->input->post("units");
-			$update['discount'] = $this->input->post("discount");
-			$image = Common::upload_image($_FILES['image']['name']);
-			
-			$msg = "";
-			if($image['status'] == false)
-			{
-				$insert['image'] = NULL;
-				$msg = $image['error'];
-			}
-			else
-			{
-				$insert['image'] = $image['status'];
-			}
-			
+			$insert['name'] = $this->input->post("name");						
 			$this->PRODUCT->insert($insert);
-			$this->session->set_flashdata('msg',"Product successfully Added ".$msg);
+			$this->session->set_flashdata('msg',"Country successfully Added");
 			//print_r($_FILES['image']);exit;
-			redirect('admin/products', 'refresh');
+			redirect('admin/countries', 'refresh');
 		}
-		$data['categories'] = $this->CATEGORY->all_categories();
-		$this->load->view('admin/products/add',$data);
+		$this->load->view('admin/countries/add',$data);
 	}
 	
 }
