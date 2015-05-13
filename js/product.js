@@ -5,6 +5,10 @@ var Product = function(){
 		var price = $("#price").val();
 		var quantity = $("#quantity").val();
 		var category_id = $("#category_id").val();
+		var units = $("#units").val();
+		var discount = $("#discount").val();
+		$("#units_error").html("");
+		$("#discount_error").html("");
 		$("#category_error").html("");
 		$("#name_error").html("");
 		$("#price_error").html("");
@@ -53,6 +57,10 @@ var Product = function(){
 		var price = $("#price").val();
 		var quantity = $("#quantity").val();
 		var category_id = $("#category_id").val();
+		var units = $("#units").val();
+		var discount = $("#discount").val();
+		$("#units_error").html("");
+		$("#discount_error").html("");
 		$("#category_error").html("");
 		$("#name_error").html("");
 		$("#price_error").html("");
