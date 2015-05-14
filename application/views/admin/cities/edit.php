@@ -27,6 +27,22 @@
 		    	<label>State</label>
 			<select id="state_id" name="state_id">
 				<option value="">--Select--</option>
+				<?php foreach($states as $key => $val)
+				      {
+				      	if($val['id'] == $cities['state_id'])
+				      	{
+				?>
+						<option value="<?php echo $val['id'];?>" selected><?php echo $val['state_name'];?></option>	
+				<?php>
+				      	}
+				      	else
+				      	{
+				?>
+						<option value="<?php echo $val['id'];?>"><?php echo $val['state_name'];?></option>
+				<?php
+					}
+				      }
+				?>
 			</select>
 			<div class="error_block" id="state_error"></div>
 		</div>
@@ -38,6 +54,7 @@
 		</div>		
 	    	<div>
 	    		<input type="hidden" id="id" name="id" value="<?php echo $cities['id'];?>">
+	    		<input type="hidden" id="hidden_state_id" name="hidden_state_id" value="<?php echo $cities['state_id'];?>">
 		    	<input type="submit" value="Submit" id="submit">
 		</div>
 		
@@ -45,7 +62,10 @@
 </section>
 <script>
 $("#editFrm").submit(function(event){
-	City.editCityValidate(event)	;
+	City.editCityValidate(event);
 });
+$("#country_id").change(function(){
+	City.getStateForEdit();
+})
 </script>
 <?php $this->load->view('admin/footer'); ?> 
