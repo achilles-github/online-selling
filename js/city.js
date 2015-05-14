@@ -101,11 +101,62 @@ var State = function(){
 		        }
      		});
 	}
+	var cityDataTable = function(){
+		$('#cities').DataTable({
+		  "bServerSide": true,
+		  "sAjaxSource": BASE + "admin/cities/pages",
+		  "aoColumns": [{
+		    "mData":"serial_no",
+		    "sTitle": "SL No.",
+		    "bSortable": false,
+		  },{
+		    "mData": "state_name",
+		    "sTitle": "State Name"
+		  },{
+		    "mData": "name",
+		    "sTitle": "City Name"
+		  },{
+		    "mData":"id",
+		    "mRender": function(id){
+		    	
+		      return "<a href='"+BASE+"admin/cities/edit/"+id+"' alt='edit'>Edit</a> | <a class='confirmDelete' href='javascript:;' rel = '"+id+"' alt='delete'>Delete</a>";
+		    }
+		  }],
+		  "order": [[2, "desc"]],
+		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
+	    });
+	}
+	var deleteCity = function()
+	{
+		var id = $(this).attr("rel");
+		$.ajax({
+		        type:'POST',
+		        url:BASE+'admin/cities/delete',
+			data:{id:id},
+		        dataType:'json',
+		        success:function(data){
+		            //alert(data);
+		            
+		            if(data['status'] == "1")
+		            {
+		                $(this).closest('tr').remove();
+		            }
+		            else
+		            {
+		                alert(data['message']);
+		                return false;
+		            }
+		        }
+	     });
+	}
+
 	return {
 		addCityValidate : addCityValidate,
 		editCityValidate : editCityValidate,
-		getStateByCountry : getStateByCountry
-
+		getStateByCountry : getStateByCountry,
+		getStateForEdit:getStateForEdit,
+		cityDataTable : cityDataTable,
+		deleteCity : deleteCity
 	};
 }();
 

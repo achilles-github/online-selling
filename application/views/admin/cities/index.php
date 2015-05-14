@@ -38,52 +38,10 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#cities').DataTable({
-	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/cities/pages",
-	  "aoColumns": [{
-	    "mData":"serial_no",
-	    "sTitle": "SL No.",
-	    "bSortable": false,
-	  },{
-	    "mData": "state_name",
-	    "sTitle": "State Name"
-	  },{
-	    "mData": "name",
-	    "sTitle": "City Name"
-	  },{
-	    "mData":"id",
-	    "mRender": function(id){
-	    	
-	      return "<a href='"+BASE+"admin/cities/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCity("+id+",this)' alt='delete'>Delete</a>";
-	    }
-	  }],
-	  "order": [[2, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
-    });
+	City.cityDataTable();
 });
-function deleteCity(id,ele)
-{
-	$.ajax({
-                type:'POST',
-                url:BASE+'admin/cities/delete',
-		data:{id:id},
-                dataType:'json',
-                success:function(data){
-                    //alert(data);
-                    
-                    if(data['status'] == "1")
-                    {
-                        $(ele).closest('tr').remove();
-                    }
-                    else
-                    {
-                        alert(data['message']);
-                        return false;
-                    }
-                }
-     });
-}
-
+$(".confirmDelete").click(function(){
+	City.cityDelete();
+})
 </script>
 <?php $this->load->view('admin/footer'); ?> 
