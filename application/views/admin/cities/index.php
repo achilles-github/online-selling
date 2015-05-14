@@ -15,14 +15,17 @@
 	?>
 	</div>
 	<a href="<?php echo base_url();?>admin/products/add">Add New</a>
-	<table class="table table-striped table-bordered table-hover" id="products">
+	<table class="table table-striped table-bordered table-hover" id="cities">
 	<thead>
 	<tr>
 		<th>
 			 SL No.
 		</th>
 		<th>
-			 Country Name
+			 State Name
+		</th>
+		<th>
+			 City  Name
 		</th>
 		<th class="hidden-xs">
 			 Action
@@ -35,32 +38,35 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#products').DataTable({
+	$('#cities').DataTable({
 	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/countries/pages",
+	  "sAjaxSource": BASE + "admin/cities/pages",
 	  "aoColumns": [{
 	    "mData":"serial_no",
 	    "sTitle": "SL No.",
 	    "bSortable": false,
 	  },{
+	    "mData": "state_name",
+	    "sTitle": "State Name"
+	  },{
 	    "mData": "name",
-	    "sTitle": "Country Name"
+	    "sTitle": "City Name"
 	  },{
 	    "mData":"id",
 	    "mRender": function(id){
 	    	
-	      return "<a href='"+BASE+"admin/countries/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCountry("+id+",this)' alt='delete'>Delete</a>";
+	      return "<a href='"+BASE+"admin/cities/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCity("+id+",this)' alt='delete'>Delete</a>";
 	    }
 	  }],
-	  "order": [[1, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,2 ] }]
+	  "order": [[2, "desc"]],
+	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
     });
 });
-function deleteCountry(id,ele)
+function deleteCity(id,ele)
 {
 	$.ajax({
                 type:'POST',
-                url:BASE+'admin/countries/delete',
+                url:BASE+'admin/cities/delete',
 		data:{id:id},
                 dataType:'json',
                 success:function(data){

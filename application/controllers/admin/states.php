@@ -67,9 +67,6 @@ class Products extends CI_Controller {
 		foreach($data['aaData'] as $key => $val)
 		{
 			$data['aaData'][$key]['serial_no'] = $i;
-			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
-			$data['aaData'][$key]['quantity'] = $val['quantity']." ".$val['units'];
-			$data['aaData'][$key]['status'] = array("id" => $val['id'],"status" => $val['isenabled']);
 			$i++;
 		}
 		echo json_encode($data);
@@ -101,27 +98,6 @@ class Products extends CI_Controller {
 		echo json_encode($data);
 		exit;
 	}
-	public function change_status()
-	{
-		$data = array();
-		$id = $this->input->post("id");
-		$product = $this->STATE->city_by_id($id);
-		if($product['isenabled'] == "1")
-		{
-			$update['isenabled'] = "0";
-			$data['status'] = "0";
-			$this->STATE->update($update,$id);
-		}
-		else
-		{
-			$update['isenabled'] = "1";
-			$data['status'] = "1";
-			$this->STATE->update($update,$id);
-		}
-		echo json_encode($data);
-		exit;
-		
-	}
 	public function edit($id)
 	{
 		$data['logged_admin'] = $this->session->userdata('logged_admin');
@@ -137,12 +113,12 @@ class Products extends CI_Controller {
 			//$update['isdeleted'] = "0";
 			
 			$this->STATE->update($update,$id);
-			$this->session->set_flashdata('msg',"Product successfully Updated ".$msg);
+			$this->session->set_flashdata('msg',"State successfully Updated ".$msg);
 			//print_r($_FILES['image']);exit;
 			redirect('admin/states', 'refresh');
 		}
-		$data['countries'] = $this->COUNTRY->all_countries();
-		$data['states'] = $this->STATE->country_by_id($id);
+		$data['countries'] = $this->STATE->all_countries();
+		$data['states'] = $this->STATE->state_by_id($id);
 		$this->load->view('admin/states/edit',$data);
 	}
 	public function add()
@@ -155,15 +131,15 @@ class Products extends CI_Controller {
 			$insert['state_name'] = $this->input->post("name");
 			$insert['isdeleted'] = "0";		
 			$insert['country_id'] = $this->input->post("country_id");
-			$update['tax'] = $this->input->post("tax");
+			$insert['tax'] = $this->input->post("tax");
 			
 			
 			$this->STATE->insert($insert);
-			$this->session->set_flashdata('msg',"Product successfully Added ".$msg);
+			$this->session->set_flashdata('msg',"State successfully Added ".$msg);
 			//print_r($_FILES['image']);exit;
 			redirect('admin/states', 'refresh');
 		}
-		$data['categories'] = $this->CATEGORY->all_categories();
+		$data['countries'] = $this->STATE->all_countries();
 		$this->load->view('admin/states/add',$data);
 	}
 	
