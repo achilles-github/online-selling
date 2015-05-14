@@ -129,7 +129,13 @@ class Products extends CI_Controller {
 		$data['countries'] = $this->CITY->all_countries();
 		$this->load->view('admin/cities/add',$data);
 	}
-	
+	public function get_states()
+	{
+		$id = $this->input->post("id");
+		$data = $this->CITY->state_country_id($id);
+		echo json_encode($data);
+		exit;
+	}
 }
 /* End of file login.php */
 /* Location: ./application/controllers/admin/dashboard.php */

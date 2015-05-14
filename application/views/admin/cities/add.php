@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?>js/country.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/city.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -47,5 +47,8 @@
 $("#addFrm").submit(function(event){
 	City.addCityValidate(event);
 });
+$("#country_id").change(function(){
+	City.getStateByCountry();
+})
 </script>
 <?php $this->load->view('admin/footer'); ?> 
