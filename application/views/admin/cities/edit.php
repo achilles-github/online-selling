@@ -4,7 +4,7 @@
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
-	<h1>Product</h1>
+	<h1>Cities</h1>
 	    <?php
 		$frmAttrs   = array("id"=>'editFrm','class' => 'edit_cities');
 		echo  form_open_multipart('admin/cities/edit/'.$id,$frmAttrs); 

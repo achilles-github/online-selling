@@ -6,7 +6,7 @@
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
-	<h1>Countries</h1>
+	<h1>Cities</h1>
 	<div class="msg">
 	<?php 
 		if($this->session->flashdata('msg')){
