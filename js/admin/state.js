@@ -52,9 +52,59 @@ var State = function(){
 		}
 		
 	}
+	var stateDataTable = function(){
+		$('#states').DataTable({
+		  "bServerSide": true,
+		  "sAjaxSource": BASE + "admin/states/pages",
+		  "aoColumns": [{
+		    "mData":"serial_no",
+		    "sTitle": "SL No.",
+		    "bSortable": false,
+		  },{
+		    "mData": "country_name",
+		    "sTitle": "Country Name"
+		  },{
+		    "mData": "state_name",
+		    "sTitle": "State Name"
+		  },{
+		    "mData":"id",
+		    "mRender": function(id){
+		    	
+		      return "<a href='"+BASE+"admin/states/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' rel ='"+id+"'  alt='delete'  class='confirmDelete'>Delete</a>";
+		    }
+		  }],
+		  "order": [[2, "desc"]],
+		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
+	    });
+	}
+	var deleteState = function(){
+		var id = $(this).attr("rel");
+		var ele = $(this);
+		$.ajax({
+		        type:'POST',
+		        url:BASE+'admin/states/delete',
+			data:{id:id},
+		        dataType:'json',
+		        success:function(data){
+		            //alert(data);
+		            
+		            if(data['status'] == "1")
+		            {
+		                $(ele).closest('tr').remove();
+		            }
+		            else
+		            {
+		                alert(data['message']);
+		                return false;
+		            }
+		        }
+	     });
+	}
 	return {
 		addStateValidate : addStateValidate,
-		editStateValidate : editStateValidate
+		editStateValidate : editStateValidate,
+		stateDataTable:stateDataTable,
+		deleteState : deleteState
 
 	};
 }();

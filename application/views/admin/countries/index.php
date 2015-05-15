@@ -35,49 +35,11 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#countries').DataTable({
-	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/countries/pages",
-	  "aoColumns": [{
-	    "mData":"serial_no",
-	    "sTitle": "SL No.",
-	    "bSortable": false,
-	  },{
-	    "mData": "country_name",
-	    "sTitle": "Country Name"
-	  },{
-	    "mData":"id",
-	    "mRender": function(id){
-	    	
-	      return "<a href='"+BASE+"admin/countries/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCountry("+id+",this)' alt='delete'>Delete</a>";
-	    }
-	  }],
-	  "order": [[1, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,2 ] }]
-    });
+	Country.countryDataTable();
 });
-function deleteCountry(id,ele)
-{
-	$.ajax({
-                type:'POST',
-                url:BASE+'admin/countries/delete',
-		data:{id:id},
-                dataType:'json',
-                success:function(data){
-                    //alert(data);
-                    
-                    if(data['status'] == "1")
-                    {
-                        $(ele).closest('tr').remove();
-                    }
-                    else
-                    {
-                        alert(data['message']);
-                        return false;
-                    }
-                }
-     });
-}
+$(".confirmDelete").click(function(){
+	Country.deleteCountry();
+})
 
 </script>
 <?php $this->load->view('admin/footer'); ?> 
