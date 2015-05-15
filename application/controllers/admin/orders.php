@@ -48,7 +48,7 @@ class Orders extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","orders.order_no","orders.order_no","customers.name","orders.created","orders.id");
+		$column = array("serial_no","orders.order_no","orders.order_no","customers.name","orders.total_amount","orders.created","orders.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")

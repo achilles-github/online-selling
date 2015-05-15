@@ -55,6 +55,9 @@ $(document).ready(function(){
 	    "mData": "name",
 	    "sTitle": "Customer Name"
 	  },{
+	    "mData": "total_amount",
+	    "sTitle": "Amount"
+	  },{
 	    "mData": "created",
 	    "sTitle": "Created On"
 	  },{

@@ -10,18 +10,20 @@
 	    ?>
 	    	<div>
 		    	<label for="user_id">Order No.</label>
-			<input type="text" id="name" name="name" value="<?php echo $orders['order_no'];?>" readonly="readonly">
+			<?php echo $orders['order_no'];?>
 			
 		</div>
 	
 	    	<div>
 		    	<label for="user_id">Customer Name</label>
-			<input type="text" id="name" name="name" value="<?php echo $orders['customer_name'];?>" readonly="readonly">
+			<?php echo $orders['customer_name'];?>
 			
 		</div>
 		<div>
 		    	<label for="user_id">Shipping Address</label>
-			<textarea id="address" name="address" readonly="readonly"><?php echo $orders['shipping'];?></textarea>		
+			<?php echo $orders['address'];?>,<br>
+			<?php echo $orders['city'];?> - <?php echo $orders['zip'];?>,<br>
+			<?php echo $orders['state'];?>, <?php echo $orders['country'];?> <br>
 		</div>
 		<div>
 		<table>
@@ -41,7 +43,10 @@
 				</th>
 				<th class="hidden-xs">
 					 Total
-				</th>		
+				</th>	
+				<th>
+					Action
+				</th>	
 			</tr>
 			</thead>
 			<tbody>
@@ -55,13 +60,23 @@
 					<td><?php echo $val['quantity'];?></td>
 					<td><?php echo $val['price'];?></td>
 					<td><?php echo $val['total'];?></td>
+					<td><a href="javascirpt:;" class=".orderProductDelete" rel="<?php echo $val['id'];?>">Delete</a></td>
 				</tr>
-			<?php } ?>				
+			<?php } ?>	
+				<tr>
+					<td colspan="4">Gross Total</td>
+					<td><?php echo $total;?></td>
+				</tr>
+				<tr>
+					<td colspan="4">Less : Tax</td>
+					<td><?php echo $orders['tax'];?></td>
+				</tr>
+							
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="3"></td>
-					<td><?php echo $total;?></td>
+					<td colspan="4">Net Total</td>
+					<td><?php echo $orders['total_amount'];?></td>
 				</tr>
 			</tfoot>
 		</table>
