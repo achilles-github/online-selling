@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?> 
-<script type="text/javascript" src="<?php echo base_url();?>js/login.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>js/admin/login.js"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>

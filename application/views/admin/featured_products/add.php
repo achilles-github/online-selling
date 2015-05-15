@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?>js/featured_product.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/admin/featured_product.js" type="text/javascript"></script>
 <style>
 .ui-helper-hidden-accessible{
 	display:none;

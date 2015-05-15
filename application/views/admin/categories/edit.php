@@ -1,5 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
-<script src="<?php echo base_url();?>js/category.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/admin/category.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
