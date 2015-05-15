@@ -1,5 +1,4 @@
-var State = function(){
-	
+var State = function(){	
 	var addCityValidate = function(event){
 		var name = $("#name").val();
 		var state = $("#state_id").val();
@@ -129,6 +128,7 @@ var State = function(){
 	var deleteCity = function()
 	{
 		var id = $(this).attr("rel");
+		var ele =  $(this);
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/cities/delete',
@@ -139,7 +139,7 @@ var State = function(){
 		            
 		            if(data['status'] == "1")
 		            {
-		                $(this).closest('tr').remove();
+		                $(ele).closest('tr').remove();
 		            }
 		            else
 		            {

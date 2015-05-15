@@ -28,6 +28,11 @@ class morder extends CI_Model{
     	$this->db->where("id",$id) ;
     	$this->db->update("orders",$data);
     }
+    function update_order_product($data,$id)
+    {
+    	$this->db->where("id",$id) ;
+    	$this->db->update("order_products",$data);
+    }
     function search_orders($search,$skip,$limit,$sort="asc",$sortCol = "orders.created")
     {
     	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.status,orders.isdelivered,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->like("customers.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
@@ -47,6 +52,10 @@ class morder extends CI_Model{
     	$data = $orders->row_array();
     	return $data['count'];
     }
-    
+    function delete_all_products($data,$id)
+    {
+    	$this->db->where("order_id",$id);
+    	$this->db->update("order_products",$data);
+    }
     
 }

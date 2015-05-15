@@ -1,4 +1,5 @@
 <?php $this->load->view('admin/header'); ?>
+<script src="<?php echo base_url();?>js/order.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -60,7 +61,7 @@
 					<td><?php echo $val['quantity'];?></td>
 					<td><?php echo $val['price'];?></td>
 					<td><?php echo $val['total'];?></td>
-					<td><a href="javascirpt:;" class=".orderProductDelete" rel="<?php echo $val['id'];?>">Delete</a></td>
+					<td><a href="javascript:;" class="orderProductDelete" rel="<?php echo $val['id'];?>">Delete</a></td>
 				</tr>
 			<?php } ?>	
 				<tr>
@@ -83,5 +84,9 @@
 		</div>	    	
 	    <?=form_close()?>	   
 </section>
-
+<script>
+$(".orderProductDelete").click(function(){
+	Order.deleteOrderProduct();
+});
+</script>
 <?php $this->load->view('admin/footer'); ?> 

@@ -88,6 +88,21 @@ class Orders extends CI_Controller {
 		$id = $this->input->post("id");
 		$update = array('isdeleted' => '1');
 		$this->ORDER->update($update,$id);
+		
+		//delete from order_product table
+		$order_prod['isdeleted'] = "1";
+		$this->ORDER->delete_all_products($order_prod,$id);
+		
+		$data['status'] = "1";
+		echo json_encode($data);
+		exit;
+	}
+	public function product_delete()
+	{
+		$data = array();
+		$id = $this->input->post("id");
+		$update = array('isdeleted' => '1');
+		$this->ORDER->update_order_product($update,$id);
 		$data['status'] = "1";
 		echo json_encode($data);
 		exit;
@@ -121,8 +136,6 @@ class Orders extends CI_Controller {
 		$data['orders'] = $this->ORDER->order_by_id($id);
 		$this->load->view('admin/orders/view',$data);
 	}
-	
-	
 }
 /* End of file login.php */
 /* Location: ./application/controllers/admin/customer.php */
