@@ -4,18 +4,19 @@ class morder extends CI_Model{
     
     function get_orders($skip,$limit,$sort="asc",$sortCol = "orders.created")
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.total_amount,orders.status,orders.isdelivered,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.amount,orders.status,orders.isdelivered,customers.name,orders.payment_type',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
     	$data = $orders->result_array();   	
     	return $data;
     }
     function order_by_id($id)
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created, orders.status,orders.isdelivered,customers.name,orders.total_amount,orders.tax, shipping.address,states.state_name as state,cities.name as city, countries.country_name as country, shipping.zip')->join("customers","customers.id = orders.customer_id")->join("shippings","shippings.order_id=orders.id")->where('orders.id',$id)->get('orders');
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created, orders.status,orders.isdelivered,customers.name as customer_name,orders.amount,orders.tax, shippings.address,states.name as state,cities.name as city, countries.country_name as country, shippings.zip')->join("shippings","shippings.order_id=orders.id")->join("customers","customers.id = orders.customer_id")->join("countries","countries.id=shippings.country")->join("states","states.id=shippings.state")->join("cities","cities.id=shippings.city","left")->where('orders.id',$id)->get('orders');
     	$row = $orders->row_array();
     	if(count($row) > 0)
     	{
     		$order_products = $this->db->select("*")->where("isdeleted","0")->get("order_products");
     		$row['order_products'] = $order_products->result_array();
+    		
     	}
     	return $row;
     }
@@ -35,7 +36,7 @@ class morder extends CI_Model{
     }
     function search_orders($search,$skip,$limit,$sort="asc",$sortCol = "orders.created")
     {
-    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.status,orders.isdelivered,customers.name',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->like("customers.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
+    	$orders = $this->db->select('orders.id,orders.order_no,orders.created,orders.amount,orders.status,orders.isdelivered,customers.name,orders.payment_type',false)->join("customers","customers.id = orders.customer_id")->where('orders.isdeleted','0')->like("orders.order_no",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('orders');
     	$data = $orders->result_array();
     	return $data;
     }

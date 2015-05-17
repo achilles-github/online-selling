@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Products extends CI_Controller {
+class Cities extends CI_Controller {
 
 	var $menu_select = array(
 		'dashboard' => false,
@@ -47,7 +47,7 @@ class Products extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","countries.country_name","states.state_name","cities.name","cities.id");
+		$column = array("serial_no","states.name","cities.name","cities.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
@@ -101,14 +101,14 @@ class Products extends CI_Controller {
 			$update['country_id'] = $this->input->post("country_id");
 			$update['state_id'] = $this->input->post("state_id");
 			$this->CITY->update($update,$id);
-			$this->session->set_flashdata('msg',"City successfully Updated ".$msg);
+			$this->session->set_flashdata('msg',"City successfully Updated ");
 			//print_r($_FILES['image']);exit;
 			redirect('admin/cities', 'refresh');
 		}
 		$data['cities'] = $this->CITY->city_by_id($id);
 		$data['countries'] = $this->CITY->all_countries();
 		$data['states'] = $this->CITY->states_country_id($data['cities']['country_id']);
-		$this->load->view('admin/cities/edit',$data);
+		$this->load->view('admin/city/edit',$data);
 	}
 	public function add()
 	{
@@ -122,17 +122,17 @@ class Products extends CI_Controller {
 			$insert['state_id'] = $this->input->post("state_id");
 			
 			$this->CITY->insert($insert);
-			$this->session->set_flashdata('msg',"City successfully Added ".$msg);
+			$this->session->set_flashdata('msg',"City successfully Added ");
 			//print_r($_FILES['image']);exit;
 			redirect('admin/cities', 'refresh');
 		}
 		$data['countries'] = $this->CITY->all_countries();
-		$this->load->view('admin/cities/add',$data);
+		$this->load->view('admin/city/add',$data);
 	}
 	public function get_states()
 	{
 		$id = $this->input->post("id");
-		$data = $this->CITY->state_country_id($id);
+		$data = $this->CITY->states_country_id($id);
 		echo json_encode($data);
 		exit;
 	}

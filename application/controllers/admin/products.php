@@ -10,7 +10,11 @@ class Products extends CI_Controller {
 		'customers' => false,
 		'orders' => false,
 		'payments' => false,
-		'cms' => false
+		'cms' => false,
+		'contacts' => true,
+		'countries' => false,
+		'states' => false,
+		'cities' => false
 	);
 	
 	//constructor

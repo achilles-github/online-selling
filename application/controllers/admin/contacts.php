@@ -47,17 +47,17 @@ class Contacts extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","email","contact_no","name","created","id");
+		$column = array("serial_no","email","name","contact_no","created","id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
 		{	
-			$count = $this->CONTACT->count_contact($search);			
+			$count = $this->CONTACT->count_contacts($search);			
 			$data['aaData'] = $this->CONTACT->search_contacts($search,$skip,$limit,$sort,$sortCol);
 		}
 		else
 		{
-			$count = $this->CONTACT->count_contact();			
+			$count = $this->CONTACT->count_contacts();			
 			$data['aaData'] = $this->CONTACT->get_contacts($skip,$limit,$sort,$sortCol);
 		}		
 		$data['iTotalRecords'] = $count;

@@ -11,13 +11,21 @@
 	    ?>
 	    	<div>
 		    	<label>Country</label>
-			<select id="country_id" name="country_id">
+			<select id="country_id" name="country_id" class="country_id">
 				<option value="">--Select--</option>
 				<?php foreach($countries as $key => $val)
 				      {
+				      	if($val['id'] == $cities['country_id']){
+				?>
+					<option value="<?php echo $val['id'];?>" selected><?php echo $val['country_name'];?></option>
+				<?php
+					}
+					else
+					{
 				?>
 					<option value="<?php echo $val['id'];?>"><?php echo $val['country_name'];?></option>
-				<?php
+				<?php	
+					}
 				      }
 				?>
 			</select>
@@ -64,8 +72,8 @@
 $("#editFrm").submit(function(event){
 	City.editCityValidate(event);
 });
-$("#country_id").change(function(){
-	City.getStateForEdit();
+$("#editFrm").on('change',".country_id",function(){
+	City.getStateForEdit(this);
 })
 </script>
 <?php $this->load->view('admin/footer'); ?> 

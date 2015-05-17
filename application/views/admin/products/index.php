@@ -28,6 +28,12 @@
 			 Product Name
 		</th>
 		<th>
+			 Quantity
+		</th>
+		<th>
+			 Price
+		</th>
+		<th>
 			 Created On
 		</th>
 		<th class="hidden-xs">

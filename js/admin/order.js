@@ -9,14 +9,17 @@ var Order = function(){
 		    "sTitle": "SL No.",
 		    "bSortable": false,
 		  },{
-		    "mData": "Order No",
-		    "sTitle": "order_no"
+		    "mData": "order_no",
+		    "sTitle": "Order No"
 		  },{
 		    "mData": "name",
 		    "sTitle": "Customer Name"
 		  },{
-		    "mData": "total_amount",
+		    "mData": "amount",
 		    "sTitle": "Amount"
+		  },{
+		    "mData": "payment_type",
+		    "sTitle": "Payment Method"
 		  },{
 		    "mData": "created",
 		    "sTitle": "Created On"
@@ -26,14 +29,14 @@ var Order = function(){
 		      return "<a href='"+BASE+"admin/orders/view/"+delivered.id+"' alt='view'>View</a> | <a href='javascript:;' class='confirmDelete' rel='"+delivered.id+"' alt='delete'>Delete</a> | <a href='javascript:;' class='deliverStatus' rel='"+delivered.id+"' data-status='"+delivered.status+"' alt='active'>Undelivered</a>";
 		    }
 		  }],
-		  "order": [[3, "desc"]],
-		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,4 ] }]
+		  "order": [[5, "desc"]],
+		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,4,6 ] }]
 	       });
 	}
-	var deleteOrderProduct = function()
+	var deleteOrderProduct = function(ele)
 	{
-		var id = $(this).attr("rel");
-		var ele =  $(this);
+		var id = $(ele).attr("rel");
+		
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/orders/product_delete',
@@ -54,9 +57,9 @@ var Order = function(){
 		        }
 	     });
 	}
-	var deleteOrder = function(){
-		var id = $(this).attr("rel");
-		var ele =  $(this);
+	var deleteOrder = function(ele){
+		var id = $(ele).attr("rel");
+		
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/orders/delete',
@@ -77,10 +80,10 @@ var Order = function(){
 		        }
 	     });
 	}
-	var changeDeliveryStatus = function(){
-		var id=$(this).attr("rel");
-		var status = $(this).data('status');
-		var ele =  $(this);
+	var changeDeliveryStatus = function(ele){
+		var id=$(ele).attr("rel");
+		var status = $(ele).data('status');
+		
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/orders/change_delivery_status',

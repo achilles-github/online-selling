@@ -4,7 +4,7 @@
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
 <section class="main-content">
-	<h1>Product</h1>
+	<h1>Country</h1>
 	    <?php
 		$frmAttrs   = array("id"=>'editFrm','class' => 'edit_countries');
 		echo  form_open_multipart('admin/countries/edit/'.$id,$frmAttrs); 
@@ -12,7 +12,7 @@
 	    	
 	    	<div>
 		    	<label for="user_id">Name</label>
-			<input type="text" id="name" name="name" value="<?php echo $countries['name'];?>">
+			<input type="text" id="name" name="name" value="<?php echo $countries['country_name'];?>">
 			<div class="error_block" id="name_error"></div>
 			
 		</div>

@@ -2,9 +2,9 @@
 
 class mcity extends CI_Model{
     
-    function get_cities($skip,$limit,$sort="asc",$sortCol = "state_name")
+    function get_cities($skip,$limit,$sort="asc",$sortCol = "cities.name")
     {
-    	$cities = $this->db->select('cities.id,cities.name,countries.country_name,states.state_name')->join('countries',"countries.id = cities.country_id")->join('states',"states.id = cities.state_id")->where('cities.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('cities');
+    	$cities = $this->db->select('cities.id,cities.name,countries.country_name,states.name as state_name',false)->join('countries',"countries.id = cities.country_id")->join('states',"states.id = cities.state_id")->where('cities.isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('cities');
     	return $cities->result_array();
     }
     function city_by_id($id)
@@ -23,7 +23,7 @@ class mcity extends CI_Model{
     }
     function search_cities($search,$skip,$limit,$sort="asc",$sortCol = "cities.name")
     {
-    	$cities = $this->db->select('cities.id,cities.name,states.state_name,countries.country_name')->join('countries',"countries.id = cities.country_id")->join('states',"states.id = cities.state_id")->where('states.isdeleted','0')->like("cities.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('cities');
+    	$cities = $this->db->select('cities.id,cities.name,states.name as state_name,countries.country_name')->join('countries',"countries.id = cities.country_id")->join('states',"states.id = cities.state_id")->where('states.isdeleted','0')->like("cities.name",$search,"after")->order_by($sortCol,$sort)->limit($limit,$skip)->get('cities');
     	return $cities->result_array();
     }
     function count_cities($search = "")
@@ -42,12 +42,12 @@ class mcity extends CI_Model{
     function all_countries()
     {
     	$countries = $this->db->select("id,country_name",false)->where('isdeleted','0')->get('countries');
-    	$data = $countries->row_array();
+    	$data = $countries->result_array();
     	return $data;
     }
-    function get_state_country_id($id)
+    function states_country_id($id)
     {
-    	$states = $this->db->select("id,state_name",false)->where('country_id',$id)->where('isdeleted','0')->get('states');
+    	$states = $this->db->select("id,name as state_name",false)->where('country_id',$id)->where('isdeleted','0')->get('states');
     	return $states->result_array();
     }
     

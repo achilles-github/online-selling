@@ -1,4 +1,4 @@
-var State = function(){	
+var City = function(){	
 	var addCityValidate = function(event){
 		var name = $("#name").val();
 		var state = $("#state_id").val();
@@ -72,8 +72,8 @@ var State = function(){
 		        }
      		});
 	}
-	var getStateForEdit = function(){
-		var id = $(this).val();
+	var getStateForEdit = function(ele){
+		var id = $(ele).val();
 		var state_id = $("#hidden_state_id").val();
 		$.ajax({
 		        type:'POST',
@@ -85,14 +85,14 @@ var State = function(){
 		            if(data.length > 0)
 		            { 
 		            	var html = "";
-		            	$.each( obj, function( key, value ) {
+		            	$.each( data, function( key, value ) {
 		            		if(state_id == value.id)
 		            		{
-		            			html += "<option value='"+value.id+"' selected>"+value.name+"</option>";
+		            			html += "<option value='"+value.id+"' selected>"+value.state_name+"</option>";
 		            		}
 					else
 					{
-						html += "<option value='"+value.id+"'>"+value.name+"</option>";
+						html += "<option value='"+value.id+"'>"+value.state_name+"</option>";
 					}
 				});		            	
 		            	$("#state_id").html(html);
@@ -125,10 +125,10 @@ var State = function(){
 		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
 	    });
 	}
-	var deleteCity = function()
+	var deleteCity = function(ele)
 	{
-		var id = $(this).attr("rel");
-		var ele =  $(this);
+		var id = $(ele).attr("rel");
+		
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/cities/delete',

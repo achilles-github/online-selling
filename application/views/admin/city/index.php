@@ -41,8 +41,8 @@
 $(document).ready(function(){    
 	City.cityDataTable();
 });
-$(".confirmDelete").click(function(){
-	City.cityDelete();
+$("#cities").on("click",".confirmDelete",function(){
+	City.deleteCity(this);
 })
 </script>
 <?php $this->load->view('admin/footer'); ?> 

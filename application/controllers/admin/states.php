@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Products extends CI_Controller {
+class States extends CI_Controller {
 
 	var $menu_select = array(
 		'dashboard' => false,
@@ -47,7 +47,7 @@ class Products extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","states.state_name","states.tax","countries.country_name","states.id");
+		$column = array("serial_no","countries.country_name","states.name","states.tax","states.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
@@ -105,16 +105,11 @@ class Products extends CI_Controller {
 		$data['id'] = $id;
 		if($this->input->post(null))
 		{
-			$update['state_name'] = $this->input->post("name");
+			$update['name'] = $this->input->post("name");
 			$update['country_id'] = $this->input->post("country_id");
 			$update['tax'] = $this->input->post("tax");
-			
-			//$update['datetime'] = date('Y-m-d H:i:s');
-			//$update['isdeleted'] = "0";
-			
 			$this->STATE->update($update,$id);
-			$this->session->set_flashdata('msg',"State successfully Updated ".$msg);
-			//print_r($_FILES['image']);exit;
+			$this->session->set_flashdata('msg',"State successfully Updated ");
 			redirect('admin/states', 'refresh');
 		}
 		$data['countries'] = $this->STATE->all_countries();
@@ -128,14 +123,12 @@ class Products extends CI_Controller {
 		
 		if($this->input->post(null))
 		{
-			$insert['state_name'] = $this->input->post("name");
+			$insert['name'] = $this->input->post("name");
 			$insert['isdeleted'] = "0";		
 			$insert['country_id'] = $this->input->post("country_id");
 			$insert['tax'] = $this->input->post("tax");
-			
-			
 			$this->STATE->insert($insert);
-			$this->session->set_flashdata('msg',"State successfully Added ".$msg);
+			$this->session->set_flashdata('msg',"State successfully Added ");
 			//print_r($_FILES['image']);exit;
 			redirect('admin/states', 'refresh');
 		}

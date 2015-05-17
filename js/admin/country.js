@@ -21,6 +21,28 @@ var Country = function(){
 		}
 		
 	}
+	var deleteCountry = function(ele){
+		var id = $(ele).attr("rel");
+		$.ajax({
+		        type:'POST',
+		        url:BASE+'admin/countries/delete',
+			data:{id:id},
+		        dataType:'json',
+		        success:function(data){
+		            //alert(data);
+		            
+		            if(data['status'] == "1")
+		            {
+		                $(ele).closest('tr').remove();
+		            }
+		            else
+		            {
+		                alert(data['message']);
+		                return false;
+		            }
+		        }
+	        });
+	}
 	var countryDataTable = function(){
 		$('#countries').DataTable({
 		  "bServerSide": true,
@@ -42,30 +64,9 @@ var Country = function(){
 		  "order": [[1, "desc"]],
 		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,2 ] }]
 	    });
+	    
 	}
-	var deleteCountry = function(){
-		var id = $(this).attr("rel");
-		var ele = $(this);
-		$.ajax({
-		        type:'POST',
-		        url:BASE+'admin/countries/delete',
-			data:{id:id},
-		        dataType:'json',
-		        success:function(data){
-		            //alert(data);
-		            
-		            if(data['status'] == "1")
-		            {
-		                $(ele).closest('tr').remove();
-		            }
-		            else
-		            {
-		                alert(data['message']);
-		                return false;
-		            }
-		        }
-	     });
-	}
+	
 	return {
 		addCountryValidate : addCountryValidate,
 		editCountryValidate : editCountryValidate,

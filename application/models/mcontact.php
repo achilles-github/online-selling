@@ -4,7 +4,7 @@ class mcontact extends CI_Model{
     
     function get_contacts($skip,$limit,$sort="asc",$sortCol = "created")
     {
-    	$contacts = $this->db->select('id,name,contact_no,email,created',false)->where('isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('customers');
+    	$contacts = $this->db->select('id,name,contact_no,email,created',false)->where('isdeleted','0')->order_by($sortCol,$sort)->limit($limit,$skip)->get('contacts');
     	$data = $contacts->result_array();
     	
     	return $data;

@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?php echo base_url();?>plugins/datatables/media/css/jquery.dataTables.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo base_url();?>plugins/datatables/media/css/jquery.dataTables_themeroller.css" type="text/css" />
 <script src="<?php echo base_url();?>plugins/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/admin/state.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -24,6 +25,12 @@
 		<th>
 			 Country Name
 		</th>
+		<th>
+			 State Name
+		</th>
+		<th>
+			Tax %
+		</th>
 		<th class="hidden-xs">
 			 Action
 		</th>		
@@ -37,7 +44,7 @@
 $(document).ready(function(){    
 	State.stateDataTable();
 });
-$(".confirmDelete").click(function(){
+$("#states").on('click','.confirmDelete',function(){
 	State.deleteState();
 })
 

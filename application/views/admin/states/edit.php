@@ -13,7 +13,7 @@
 		    	<label>Country</label>
 			<select id="country_id" name="country_id">
 				<option value="">--Select--</option>
-				<?php foreach($categories as $key => $val)
+				<?php foreach($countries as $key => $val)
 				      {
 				      	 if($val['id'] ==  $states['country_id'])
 				      	 {

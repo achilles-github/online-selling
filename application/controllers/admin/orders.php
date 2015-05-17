@@ -48,7 +48,7 @@ class Orders extends CI_Controller {
 		$skip = $this->input->get('iDisplayStart');
 		$search = $this->input->get('sSearch');
 		$sort = $this->input->get('sSortDir_0');
-		$column = array("serial_no","orders.order_no","orders.order_no","customers.name","orders.total_amount","orders.created","orders.id");
+		$column = array("serial_no","orders.order_no","orders.order_no","customers.name","orders.amount","orders.created","orders.id");
 		$colNo = $this->input->get('iSortCol_0');
 		$sortCol = $column[$colNo];
 		if($search != "")
@@ -70,6 +70,14 @@ class Orders extends CI_Controller {
 			$data['aaData'][$key]['serial_no'] = $i;
 			$data['aaData'][$key]['datetime'] = date('Y-m-d h:i A',strtotime($val['created']));
 			$data['aaData'][$key]['delivered'] = array("id" => $val['id'],"status" => $val['isdelivered']);
+			if($val['payment_type'] == "0")
+			{
+				$data['aaData'][$key]['payment_type'] = "Cash On Delivery";
+			}
+			if($val['payment_type'] == "1")
+			{
+				$data['aaData'][$key]['payment_type'] = "By Paypal";
+			}
 			$i++;
 		}
 		echo json_encode($data);

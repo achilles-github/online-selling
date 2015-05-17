@@ -29,6 +29,7 @@ var State = function(){
 	var editStateValidate = function(event){
 		var name = $("#name").val();
 		var country_id = $("#country_id").val();
+		var tax = $("#tax").val();
 		$("#name_error").html("");
 		$("#tax_error").html("");
 		$("#country_error").html("");
@@ -67,6 +68,9 @@ var State = function(){
 		    "mData": "state_name",
 		    "sTitle": "State Name"
 		  },{
+		    "mData": "tax",
+		    "sTitle": "Tax %"
+		  },{
 		    "mData":"id",
 		    "mRender": function(id){
 		    	
@@ -74,7 +78,7 @@ var State = function(){
 		    }
 		  }],
 		  "order": [[2, "desc"]],
-		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
+		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3,4 ] }]
 	    });
 	}
 	var deleteState = function(){

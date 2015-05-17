@@ -32,6 +32,9 @@
 			 Amount
 		</th>
 		<th>
+			 Payment Method
+		</th>
+		<th>
 			 Created On
 		</th>
 		<th class="hidden-xs">
@@ -47,11 +50,11 @@
 $(document).ready(function(){    
 	Order.orderDataTable();
 });
-$(".confirmDelete").click(function(){
-	Order.deleteOrder();
+$("#orders").on('click',".confirmDelete",function(){
+	Order.deleteOrder(this);
 });
-$(".deliverStatus").click(function(){
-	Order.changeDeliveryStatus();
+$("#orders").on('click',".deliverStatus",function(){
+	Order.changeDeliveryStatus(this);
 });
 </script>
 <?php $this->load->view('admin/footer'); ?> 
