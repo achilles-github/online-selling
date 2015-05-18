@@ -45,7 +45,7 @@ $(document).ready(function(){
 	State.stateDataTable();
 });
 $("#states").on('click','.confirmDelete',function(){
-	State.deleteState();
+	State.deleteState(this);
 })
 
 </script>

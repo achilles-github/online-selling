@@ -102,10 +102,87 @@ var Product = function(){
 			return false;
 		}	
 	}
+	var productDataTable = function(){
+		$('#products').DataTable({
+		  "bServerSide": true,
+		  "sAjaxSource": BASE + "admin/products/pages",
+		  "aoColumns": [{
+		    "mData":"serial_no",
+		    "sTitle": "SL No.",
+		    "bSortable": false,
+		  },{
+		    "mData": "cat_name",
+		    "sTitle": "Category Name"
+		  },{
+		    "mData": "name",
+		    "sTitle": "Product Name"
+		  },{
+		    "mData": "quantity",
+		    "sTitle": "Quantity"
+		  },{
+		    "mData": "price",
+		    "sTitle": "Price"
+		  },{
+		    "mData": "created",
+		    "sTitle": "Created On"
+		  },{
+		    "mData":"status",
+		    "mRender": function(status){
+		    	
+		      return "<a href='"+BASE+"admin/products/edit/"+status.id+"' alt='edit'>Edit</a> | <a class='confirmDelete' href='javascript:;' rel='"+status.id+"' alt='delete'>Delete</a> | <a href='javascript:;' class='changeStatus' rel='"+status.id+"' alt='active'>Active</a>";
+		    }
+		  }],
+		  "order": [[3, "desc"]],
+		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,6 ] }]
+	    });
+	}
+	var deleteProduct = function(ele){
+		var id = $(ele).attr("rel");
+		$.ajax({
+		        type:'POST',
+		        url:BASE+'admin/products/delete',
+			data:{id:id},
+		        dataType:'json',
+		        success:function(data){
+		            //alert(data);
+		            
+		            if(data['status'] == "1")
+		            {
+		                $(ele).closest('tr').remove();
+		            }
+		            else
+		            {
+		                alert(data['message']);
+		                return false;
+		            }
+		        }
+	     });
+	}
+	var changeStatus = function(ele){
+		var id = $(ele).attr("rel");
+		$.ajax({
+		        type:'POST',
+		        url:BASE+'admin/products/change_status',
+			data:{id:id},
+		        dataType:'json',
+		        success:function(data){
+		            if(data['status'] == "1")
+		            {
+		                $(ele).html("Active");
+		            }
+		            else
+		            {
+		                $(ele).html("InActive");
+		            }
+		        }
+	     });
+	}
 	return {
 		addProductValidate : addProductValidate,
-		editProductValidate : editProductValidate
-
+		editProductValidate : editProductValidate,
+		productDataTable : productDataTable,
+		deleteProduct : deleteProduct,
+		changeStatus:changeStatus
 	};
 }();
 

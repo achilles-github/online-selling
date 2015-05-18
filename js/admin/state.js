@@ -81,9 +81,9 @@ var State = function(){
 		  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3,4 ] }]
 	    });
 	}
-	var deleteState = function(){
-		var id = $(this).attr("rel");
-		var ele = $(this);
+	var deleteState = function(ele){
+		var id = $(ele).attr("rel");
+		
 		$.ajax({
 		        type:'POST',
 		        url:BASE+'admin/states/delete',

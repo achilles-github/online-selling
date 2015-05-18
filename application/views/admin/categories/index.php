@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="<?php echo base_url();?>plugins/datatables/media/css/jquery.dataTables.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo base_url();?>plugins/datatables/media/css/jquery.dataTables_themeroller.css" type="text/css" />
 <script src="<?php echo base_url();?>plugins/datatables/media/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="<?php echo base_url();?>js/admin/category.js" type="text/javascript"></script>
 <nav>
 <?php $this->load->view('admin/left_menu'); ?> 
 </nav>
@@ -38,51 +39,10 @@
 </section>
 <script>
 $(document).ready(function(){    
-	$('#categories').DataTable({
-	  "bServerSide": true,
-	  "sAjaxSource": BASE + "admin/categories/pages",
-	  "aoColumns": [{
-	    "mData":"serial_no",
-	    "sTitle": "SL No.",
-	    "bSortable": false,
-	  },{
-	    "mData": "cat_name",
-	    "sTitle": "Category Name"
-	  },{
-	    "mData": "datetime",
-	    "sTitle": "Created On"
-	  },{
-	    "mData":"id",
-	    "mRender": function(id){
-	    	
-	      return "<a href='"+BASE+"admin/categories/edit/"+id+"' alt='edit'>Edit</a> | <a href='javascript:;' onclick='deleteCategories("+id+",this)' alt='delete'>Delete</a>";
-	    }
-	  }],
-	  "order": [[2, "desc"]],
-	  "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [ 0,3 ] }]
-    });
+	Category.categoryDataTable();
 });
-function deleteCategories(id,ele)
-{
-	$.ajax({
-                type:'POST',
-                url:BASE+'admin/categories/delete',
-		data:{id:id},
-                dataType:'json',
-                success:function(data){
-                    //alert(data);
-                    $('#show_Loader_stats').hide();
-                    if(data['status'] == "1")
-                    {
-                        $(ele).closest('tr').remove();
-                    }
-                    else
-                    {
-                        alert(data['message']);
-                        return false;
-                    }
-                }
-     });
-}
+$("#categories").on("click",".confirmDelete",function(){
+	Category.deleteCategories(this);
+})
 </script>
 <?php $this->load->view('admin/footer'); ?> 
